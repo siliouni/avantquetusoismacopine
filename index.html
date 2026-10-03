@@ -127,10 +127,8 @@
   </aside>
   <script>
     // Le compte à rebours démarre au premier affichage et reste identique sur cet appareil.
-    const key = 'compte-a-rebours-date-de-fin';
-    let end = localStorage.getItem(key);
-    if (!end) { end = String(Date.now() + 40 * 24 * 60 * 60 * 1000); localStorage.setItem(key, end); }
-    const target = Number(end);
+    // Échéance fixe pour que le même lien affiche le même décompte sur tous les appareils.
+    const target = Date.parse('2026-11-12T13:01:29Z');
     function update() {
       const left = Math.max(0, target - Date.now());
       const days = Math.floor(left / 86400000);
