@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8efe9">
+  <title>Un petit compte à rebours</title>
+  <style>
+    :root { --ink:#382d31; --muted:#806f73; --rose:#c66e78; --paper:#fffaf6; --line:#eadbd5; }
+    * { box-sizing:border-box }
+    body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(ellipse at 10% 10%,#f4e1df 0,transparent 35%),radial-gradient(ellipse at 90% 85%,#e7e7d9 0,transparent 34%),#f8efe9; font-family:Georgia,'Times New Roman',serif; }
+    main { width:min(100% - 36px,780px); margin:auto; padding:50px 0 38px; }
+    .top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font:600 11px/1.2 system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; }
+    .heart { color:var(--rose); font-size:20px; }
+    .hero { text-align:center; padding:58px 12px 44px; }
+    .eyebrow { color:var(--rose); font:600 12px system-ui,sans-serif; letter-spacing:.18em; text-transform:uppercase; }
+    h1 { font-size:clamp(38px,8vw,68px); line-height:1.02; font-weight:400; letter-spacing:-.04em; margin:18px 0 14px; }
+    .intro { font-size:18px; line-height:1.65; color:var(--muted); margin:0 auto; max-width:470px; }
+    .count-card { position:relative; overflow:hidden; background:rgba(255,250,246,.83); border:1px solid rgba(234,219,213,.9); border-radius:24px; padding:30px 24px 28px; box-shadow:0 18px 60px #77585212; text-align:center; }
+    .count-card:before,.count-card:after { content:'✦'; position:absolute; color:#d8a5a0; opacity:.5; font-size:18px; }
+    .count-card:before { top:20px; left:24px } .count-card:after { bottom:20px; right:24px }
+    .count-label { color:var(--muted); font:600 11px system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; }
+    .days { color:var(--rose); font-size:clamp(90px,20vw,150px); line-height:.98; letter-spacing:-.07em; margin:14px 0 8px; font-variant-numeric:tabular-nums; }
+    .days-caption { font-size:18px; color:var(--muted); }
+    .clock { display:flex; justify-content:center; gap:12px; margin:23px auto 0; font:12px system-ui,sans-serif; color:var(--muted); }
+    .clock span { min-width:55px; padding:10px 8px; border-radius:12px; background:#f7eeea; }
+    .clock b { display:block; color:var(--ink); font:500 21px Georgia,serif; margin-bottom:4px; }
+    .note { text-align:center; padding:38px 18px 22px; }
+    .note .tiny-heart { color:var(--rose); font-size:22px; }
+    .note p { margin:12px auto 0; max-width:480px; font-size:17px; line-height:1.65; }
+    .weekly { margin-top:25px; border-top:1px solid var(--line); padding-top:26px; }
+    .weekly h2 { margin:0 0 8px; text-align:center; font-size:25px; font-weight:400; }
+    .weekly > p { text-align:center; color:var(--muted); margin:0 0 20px; font:13px system-ui,sans-serif; }
+    .weeks { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .week { min-height:105px; border:1px dashed #d9c6c0; border-radius:15px; background:#fffaf677; display:grid; place-content:center; text-align:center; color:var(--muted); padding:12px; }
+    .week strong { color:var(--rose); font:600 10px system-ui,sans-serif; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px; }
+    .week span { font-size:13px; line-height:1.4; }
+    footer { text-align:center; padding-top:31px; color:#9b898b; font:11px system-ui,sans-serif; letter-spacing:.08em; }
+    @media(max-width:540px) { main{padding-top:28px}.hero{padding:48px 4px 32px}.weeks{grid-template-columns:repeat(2,1fr)}.count-card{padding:27px 14px}.top{font-size:9px} }
+    /* Version sombre et minimaliste */
+    :root { --ink:#eee9e5; --muted:#777276; --rose:#d4c7c4; --paper:#090909; --line:#282628; }
+    html { background:#030303; }
+    body { min-height:100svh; background:transparent; color:#ded9d7; font-family:Arial,Helvetica,sans-serif; overflow:hidden; }
+    #sand { position:fixed; inset:0; z-index:0; width:100%; height:100%; opacity:.74; }
+    body::after { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at center,transparent 0%,#03030320 50%,#030303cf 100%); }
+    main { position:relative; z-index:1; min-height:100svh; width:min(100% - 36px,780px); padding:0; display:flex; flex-direction:column; justify-content:center; }
+    .top,.hero,.note,.weekly,footer { display:none; }
+    .count-card { position:relative; background:transparent; border:0; border-radius:0; box-shadow:none; padding:40px 18px; }
+    .count-card::before,.count-card::after { display:none; }
+    .count-card:before,.count-card:after { display:none; }
+    .count-label { color:#8e1717; font:700 10px Arial,sans-serif; letter-spacing:.42em; text-transform:uppercase; }
+    .divider { display:none; }
+    .days { display:none; }
+    .days-caption { color:#777; font:700 11px Arial,sans-serif; letter-spacing:.32em; text-transform:uppercase; }
+    .count-card { padding:40px 18px; }
+    .days-caption { margin-top:17px; }
+    .clock { display:flex; flex-wrap:nowrap; justify-content:center; gap:clamp(7px,3vw,27px); margin:24px auto 0; color:#5d5858; width:max-content; max-width:100%; }
+    .clock span { min-width:0; padding:8px 0; background:transparent; text-transform:uppercase; letter-spacing:.12em; font:9px Arial,sans-serif; white-space:nowrap; }
+    .clock b { color:#d7d3d3; font:500 clamp(20px,5vw,37px)/1 Arial,sans-serif; letter-spacing:-.04em; margin-bottom:9px; font-variant-numeric:tabular-nums; }
+    .ornament { display:none; }
+    .secret-trigger { position:fixed; z-index:2; left:18px; bottom:18px; width:14px; height:14px; padding:0; border:1px solid #481010; border-radius:0; background:#070707; cursor:pointer; opacity:.38; transition:opacity .2s,border-color .2s; }
+    .secret-trigger:hover,.secret-trigger:focus-visible { opacity:1; border-color:#a01818; outline:none; }
+    .secret-trigger::after { content:''; position:absolute; inset:3px; border-radius:0; background:#711010; }
+    .secret-window { position:fixed; z-index:2; left:18px; bottom:43px; width:min(310px,calc(100vw - 36px)); padding:20px 21px; color:#c9c3c3; background:#090909; border:1px solid #371010; box-shadow:0 14px 55px #000; opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .22s,transform .22s,visibility .22s; }
+    .secret-window.open { opacity:1; visibility:visible; transform:translateY(0); }
+    .secret-window small { display:block; margin-bottom:13px; color:#8e1717; font:700 9px Arial,sans-serif; letter-spacing:.3em; text-transform:uppercase; }
+    .secret-window p { margin:0; font:15px/1.5 Arial,sans-serif; }
+    main { width:100%; max-width:none; min-height:100svh; margin:0; padding:30px clamp(24px,6vw,100px); display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,.9fr); gap:clamp(18px,5vw,80px); align-items:center; }
+    .count-card { grid-column:1; grid-row:1; padding:32px 8px; }
+    .visual { grid-column:2; grid-row:1; min-width:0; height:min(90svh,900px); margin:0; position:relative; display:flex; justify-content:center; align-items:center; }
+    .visual img { display:block; width:100%; height:100%; object-fit:contain; object-position:center; filter:grayscale(1) contrast(1.15) brightness(.88); opacity:.9; }
+    .sand-flow { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+    .visual::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,#030303 0%,transparent 23%,transparent 78%,#03030348 100%); }
+    .clock { margin-top:24px; }
+    @media(max-width:700px) {
+      body { overflow:auto; }
+      main { min-height:100svh; padding:36px 14px 20px; display:flex; flex-direction:column; justify-content:flex-start; gap:0; }
+      .count-card { flex:none; width:100%; padding:35px 0 18px; z-index:1; }
+      .visual { width:100%; height:54svh; min-height:300px; margin-top:-4px; }
+      .visual img { object-position:center 38%; }
+      .visual::after { background:linear-gradient(180deg,#030303 0%,transparent 22%,transparent 82%,#030303 100%); }
+      .clock { gap:clamp(8px,4vw,20px); }
+      .clock span { font-size:8px; letter-spacing:.08em; }
+      .clock b { font-size:clamp(19px,6vw,27px); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="top"><span>Un petit quelque chose pour toi</span><span class="heart">♥</span></div>
+    <section class="hero">
+      <div class="eyebrow">Chaque jour nous rapproche</div>
+      <h1>Plus que<br>quelques dodos…</h1>
+      <p class="intro">J’ai préparé ce petit coin rien que pour toi. Le compte à rebours est lancé, et j’ai hâte de te retrouver.</p>
+    </section>
+    <section class="count-card" aria-live="polite">
+      <div class="ornament" aria-hidden="true"></div>
+      <div class="count-label">Le décompte</div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="days" id="days">40</div>
+      <div class="days-caption" id="days-caption">temps restant</div>
+      <div class="clock" aria-label="Temps restant aujourd’hui">
+        <span><b id="days-inline">40</b>jours</span><span><b id="hours">00</b>heures</span><span><b id="minutes">00</b>minutes</span><span><b id="seconds">00</b>secondes</span>
+      </div>
+    </section>
+      <figure class="visual"><img id="hourglass-image" src="hourglass-reference.jpg" alt="Sablier monochrome, le sable s’écoule dans l’obscurité"><canvas class="sand-flow" id="sand-flow" aria-hidden="true"></canvas></figure>
+    <section class="note">
+      <div class="tiny-heart">♡</div>
+      <p>En attendant, je pense à toi un peu plus fort chaque jour.</p>
+    </section>
+    <section class="weekly">
+      <h2>De petites surprises à venir</h2>
+      <p>Une nouvelle petite attention chaque semaine ✨</p>
+      <div class="weeks">
+        <div class="week"><strong>Semaine 1</strong><span>Une surprise arrive bientôt…</span></div>
+        <div class="week"><strong>Semaine 2</strong><span>À découvrir la semaine prochaine</span></div>
+        <div class="week"><strong>Semaine 3</strong><span>Un petit mot rien que pour toi</span></div>
+        <div class="week"><strong>Semaine 4</strong><span>Encore un peu de patience 💌</span></div>
+      </div>
+    </section>
+    <footer>FAIT AVEC AMOUR, POUR TOI</footer>
+  </main>
+  <button class="secret-trigger" id="secret-trigger" type="button" aria-label="Ouvrir le petit indice" aria-controls="secret-window" aria-expanded="false"></button>
+  <aside class="secret-window" id="secret-window" role="status" aria-hidden="true">
+    <small>Un petit indice</small>
+    <p>Garde un œil ici… chaque semaine, quelque chose va changer.</p>
+  </aside>
+  <script>
+    // Le compte à rebours démarre au premier affichage et reste identique sur cet appareil.
+    const key = 'compte-a-rebours-date-de-fin';
+    let end = localStorage.getItem(key);
+    if (!end) { end = String(Date.now() + 40 * 24 * 60 * 60 * 1000); localStorage.setItem(key, end); }
+    const target = Number(end);
+    function update() {
+      const left = Math.max(0, target - Date.now());
+      const days = Math.floor(left / 86400000);
+      document.getElementById('days').textContent = days;
+      document.getElementById('days-inline').textContent = String(days).padStart(2,'0');
+      document.getElementById('days-caption').textContent = left > 0 ? 'temps restant' : 'fin du décompte';
+      document.getElementById('hours').textContent = String(Math.floor(left / 3600000) % 24).padStart(2,'0');
+      document.getElementById('minutes').textContent = String(Math.floor(left / 60000) % 60).padStart(2,'0');
+      document.getElementById('seconds').textContent = String(Math.floor(left / 1000) % 60).padStart(2,'0');
+    }
+    update(); setInterval(update, 1000);
+    const secretButton = document.getElementById('secret-trigger');
+    const secretWindow = document.getElementById('secret-window');
+    secretButton.addEventListener('click', () => {
+      const open = secretButton.getAttribute('aria-expanded') !== 'true';
+      secretButton.setAttribute('aria-expanded', String(open));
+      secretWindow.setAttribute('aria-hidden', String(!open));
+      secretWindow.classList.toggle('open', open);
+    });
+    // Filet lumineux animé, superposé au flux de sable de la photo.
+    const flowCanvas = document.getElementById('sand-flow');
+    const flowCtx = flowCanvas.getContext('2d');
+    const hourglassImage = document.getElementById('hourglass-image');
+    let flowWidth = 0, flowHeight = 0, flowDpr = 1;
+    function sizeFlow() {
+      const rect = flowCanvas.getBoundingClientRect();
+      flowWidth = rect.width; flowHeight = rect.height;
+      flowDpr = Math.min(window.devicePixelRatio || 1, 2);
+      flowCanvas.width = Math.round(flowWidth * flowDpr);
+      flowCanvas.height = Math.round(flowHeight * flowDpr);
+      flowCtx.setTransform(flowDpr, 0, 0, flowDpr, 0, 0);
+    }
+    const fraction = value => value - Math.floor(value);
+    function drawPileSurface(x, center, halfWidth, baseY, depth, remaining) {
+      const shape = Math.max(0, 1 - Math.abs((x - center) / halfWidth));
+      return baseY - depth * Math.pow(shape, .72) * remaining;
+    }
+    function drawChangingSand(imageLeft, imageTop, imageWidth, imageHeight, progress) {
+      const topCenter = imageLeft + imageWidth * .665;
+      const topHalf = imageWidth * .19;
+      const topBase = imageTop + imageHeight * .169;
+      const topDepth = imageHeight * .067;
+      const remaining = 1 - progress;
+
+      // Efface progressivement la partie supérieure de la pile photographiée.
+      if (progress > .002) {
+        flowCtx.beginPath();
+        for (let i = 0; i <= 72; i++) {
+          const x = topCenter - topHalf + topHalf * 2 * i / 72;
+          const oldY = drawPileSurface(x, topCenter, topHalf, topBase, topDepth, 1);
+          if (i === 0) flowCtx.moveTo(x, oldY); else flowCtx.lineTo(x, oldY);
+        }
+        for (let i = 72; i >= 0; i--) {
+          const x = topCenter - topHalf + topHalf * 2 * i / 72;
+          flowCtx.lineTo(x, drawPileSurface(x, topCenter, topHalf, topBase, topDepth, remaining));
+        }
+        flowCtx.closePath();
+        flowCtx.fillStyle = '#030303';
+        flowCtx.fill();
+      }
+
+      // Dépose des grains stables dans la zone gagnée par la pile inférieure.
+      if (progress > .003) {
+        const lowerCenter = imageLeft + imageWidth * .715;
+        const lowerHalf = imageWidth * .355;
+        const lowerBase = imageTop + imageHeight * .842;
+        const oldDepth = imageHeight * .066;
+        const addedDepth = imageHeight * .115 * progress;
+        flowCtx.beginPath();
+        for (let i = 0; i <= 72; i++) {
+          const x = lowerCenter - lowerHalf + lowerHalf * 2 * i / 72;
+          const shape = Math.pow(Math.max(0, 1 - Math.abs((x - lowerCenter) / lowerHalf)), .72);
+          const y = lowerBase - (oldDepth + imageHeight * .115 * progress) * shape;
+          if (i === 0) flowCtx.moveTo(x, y); else flowCtx.lineTo(x, y);
+        }
+        for (let i = 72; i >= 0; i--) {
+          const x = lowerCenter - lowerHalf + lowerHalf * 2 * i / 72;
+          const y = drawPileSurface(x, lowerCenter, lowerHalf, lowerBase, oldDepth, 1);
+          flowCtx.lineTo(x, y);
+        }
+        flowCtx.closePath();
+        flowCtx.fillStyle = `rgba(175,175,175,${.09 * progress})`;
+        flowCtx.fill();
+
+        for (let i = 0; i < 2600; i++) {
+          const seed = i + 41;
+          const u = fraction(Math.sin(seed * 127.1) * 43758.5453);
+          const v = fraction(Math.sin(seed * 269.5) * 24634.6345);
+          const x = lowerCenter - lowerHalf + u * lowerHalf * 2;
+          const shape = Math.pow(Math.max(0, 1 - Math.abs((x - lowerCenter) / lowerHalf)), .72);
+          const originalSurface = lowerBase - oldDepth * shape;
+          const growingSurface = lowerBase - (oldDepth + addedDepth) * shape;
+          const y = growingSurface + v * Math.max(0, originalSurface - growingSurface);
+          const flicker = .38 + fraction(Math.sin(seed * 17.17) * 8371.31) * .52;
+          const grain = fraction(Math.sin(seed * 33.31) * 12817.2);
+          flowCtx.globalAlpha = flicker * progress;
+          flowCtx.fillStyle = grain > .88 ? '#777' : grain > .55 ? '#aaa' : '#e1e1e1';
+          const size = .45 + grain * 1.15;
+          flowCtx.fillRect(x, y, size, size);
+        }
+        flowCtx.globalAlpha = 1;
+      }
+    }
+    function animateFlow(now) {
+      flowCtx.clearRect(0, 0, flowWidth, flowHeight);
+      if (hourglassImage.complete && hourglassImage.naturalWidth && flowWidth && flowHeight) {
+        const ratio = Math.min(flowWidth / hourglassImage.naturalWidth, flowHeight / hourglassImage.naturalHeight);
+        const imageWidth = hourglassImage.naturalWidth * ratio;
+        const imageHeight = hourglassImage.naturalHeight * ratio;
+        const imageLeft = (flowWidth - imageWidth) / 2;
+        const positionY = parseFloat(getComputedStyle(hourglassImage).objectPosition.split(' ')[1]) / 100 || .5;
+        const imageTop = (flowHeight - imageHeight) * positionY;
+        const progress = Math.min(1, Math.max(0, 1 - (target - Date.now()) / (40 * 86400000)));
+        drawChangingSand(imageLeft, imageTop, imageWidth, imageHeight, progress);
+        const streamX = imageLeft + imageWidth * .728;
+        const streamTop = imageTop + imageHeight * .335;
+        const streamLength = imageHeight * .435;
+        for (let i = 0; i < 82; i++) {
+          const seed = i * 127.1 + 311.7;
+          const phase = ((Math.sin(seed) * 43758.5453) % 1 + 1) % 1;
+          const speed = 70 + ((Math.sin(seed * 1.7) + 1) * .5) * 72;
+          const y = streamTop + ((now / 1000 * speed + phase * streamLength) % streamLength);
+          const sway = Math.sin(now * .002 + seed) * imageWidth * .004;
+          const spread = (Math.sin(seed * 2.3) * .5 + .5) * imageWidth * .034 - imageWidth * .017;
+          const flicker = .28 + ((Math.sin(now * .008 + seed) + 1) * .5) * .56;
+          const length = 2 + ((Math.sin(seed * 4.2) + 1) * .5) * 5;
+          flowCtx.globalAlpha = flicker * (.25 + .75 * (1 - progress));
+          flowCtx.fillStyle = '#f3f1ed';
+          flowCtx.shadowColor = '#fff';
+          flowCtx.shadowBlur = 4;
+          flowCtx.fillRect(streamX + spread + sway, y, .9 + phase * .8, length);
+        }
+        flowCtx.globalAlpha = 1;
+        flowCtx.shadowBlur = 0;
+      }
+      requestAnimationFrame(animateFlow);
+    }
+    sizeFlow();
+    window.addEventListener('resize', sizeFlow);
+    hourglassImage.addEventListener('load', sizeFlow);
+    requestAnimationFrame(animateFlow);
+  </script>
+</body>
+</html>
