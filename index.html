@@ -426,7 +426,7 @@
       </section>
 
       <section class="week-section field-puzzle" aria-labelledby="field-puzzle-title">
-        <div class="week-section-head"><h3 id="field-puzzle-title">Déduction principale · point de départ</h3><p>Une seule réponse concorde avec les pièces</p></div>
+        <div class="week-section-head"><h3 id="field-puzzle-title">Déduction principale · point de départ</h3><p>Plusieurs formulations raisonnables peuvent convenir</p></div>
         <p class="puzzle-copy">Distingue le lieu où vous vous êtes rencontrés, celui des discussions ultérieures et le lieu d'une autre soirée. La première étape physique de cette enquête est l'endroit où la voiture attendait avant le premier trajet.</p>
         <p class="prerequisite-note" id="field-prerequisite">Avant de conclure, vérifie les sources, puis établis les trois concordances requises entre le club, le trajet, le gymnase et la soirée d'Ottignies.</p>
         <form id="field-form">
@@ -1334,8 +1334,9 @@
         if (!REQUIRED_FIELD_CONNECTIONS.every(key => state.connections.includes(key))) { fieldFeedback.textContent = 'La lecture des pièces est complète, mais les trois concordances principales restent à établir au tableau.'; return; }
         const answer = fieldForm.querySelector('#field-answer').value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/\s+/g, ' ');
         if (!answer) { fieldFeedback.textContent = 'Rédige une conclusion avant de déposer le rapport.'; return; }
-        const accepted = ['parking', 'le parking', 'parking du covoiturage', 'le parking du covoiturage', 'parking du premier covoiturage', 'le parking du premier covoiturage', 'point de montee', 'le point de montee', 'parking ou la voiture etait garee'];
-        if (!accepted.includes(answer)) { fieldFeedback.textContent = 'Cette conclusion ne distingue pas encore la rencontre, les conversations et l’autre soirée du point de départ du trajet.'; return; }
+        const namesOtherPlace = /\b(club|institut|gymnase|ottignies)\b/.test(answer);
+        const namesRideStart = /\b(parking|voiture|montee|monter|embarquement|place|stationnement|covoiturage|covoit|trajet|depose|recupere|recuperer|prise en charge|point de depart|lieu de depart)\b/.test(answer);
+        if (namesOtherPlace || !namesRideStart) { fieldFeedback.textContent = 'Plusieurs formulations sont acceptées : décris le parking, l’endroit où tu es monté dans sa voiture, ou le point de départ du premier covoiturage.'; return; }
         state.fieldSolved = true; save(); award('W1-E06'); addJournal('field-solved', 'Point de départ déduit', 'Le parking du premier covoiturage est distingué des autres lieux du dossier.'); render();
         fieldReward.classList.add('is-revealed');
       });
@@ -1449,8 +1450,9 @@
         const answer = document.getElementById('deep-answer').value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/\s+/g, ' ');
         const feedback = document.getElementById('deep-feedback');
         if (!answer) { feedback.textContent = 'Le dossier attend une conclusion rédigée.'; return; }
-        const accepted = ['covoiturage', 'demande de covoiturage', 'la demande de covoiturage', 'demander un covoiturage', 'demander de me prendre en covoiturage'];
-        if (!accepted.includes(answer)) { feedback.textContent = 'Cette conclusion nomme un lieu ou un souvenir, pas le geste qui a ouvert le trajet.'; return; }
+        const namesRideRequest = /\b(covoiturage|covoit|trajet|voiture|conduire|conduit|ramener|emmener|deposer|depose|prendre|demande|demander|proposer|proposition|lift|transport)\b/.test(answer);
+        const namesOtherPlace = /\b(club|institut|gymnase|ottignies|parking)\b/.test(answer);
+        if (namesOtherPlace || !namesRideRequest) { feedback.textContent = 'Plusieurs formulations peuvent convenir si elles décrivent le premier geste : demander une place, proposer un covoiturage ou lui demander de te prendre en voiture.'; return; }
         state.deepSolved = true; save(); addJournal('deep-solved', 'Dossier fantôme résolu', 'Le premier geste est relié au départ en covoiturage.'); annotate('club', 'Marge du dossier fantôme : un début peut se situer ailleurs que le lieu de la rencontre.'); updateDeepFile();
       });
 
