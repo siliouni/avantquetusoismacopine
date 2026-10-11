@@ -3,159 +3,989 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f8efe9">
-  <title>Un petit compte à rebours</title>
+  <meta name="theme-color" content="#101711">
+  <meta name="description" content="DOSSIER 19.05 — archives privées, dossier n° 001 : L'ORIGINE.">
+  <title>DOSSIER 19.05 — L'ORIGINE</title>
   <style>
-    :root { --ink:#382d31; --muted:#806f73; --rose:#c66e78; --paper:#fffaf6; --line:#eadbd5; }
-    * { box-sizing:border-box }
-    body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(ellipse at 10% 10%,#f4e1df 0,transparent 35%),radial-gradient(ellipse at 90% 85%,#e7e7d9 0,transparent 34%),#f8efe9; font-family:Georgia,'Times New Roman',serif; }
-    main { width:min(100% - 36px,780px); margin:auto; padding:50px 0 38px; }
-    .top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font:600 11px/1.2 system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; }
-    .heart { color:var(--rose); font-size:20px; }
-    .hero { text-align:center; padding:58px 12px 44px; }
-    .eyebrow { color:var(--rose); font:600 12px system-ui,sans-serif; letter-spacing:.18em; text-transform:uppercase; }
-    h1 { font-size:clamp(38px,8vw,68px); line-height:1.02; font-weight:400; letter-spacing:-.04em; margin:18px 0 14px; }
-    .intro { font-size:18px; line-height:1.65; color:var(--muted); margin:0 auto; max-width:470px; }
-    .count-card { position:relative; overflow:hidden; background:rgba(255,250,246,.83); border:1px solid rgba(234,219,213,.9); border-radius:24px; padding:30px 24px 28px; box-shadow:0 18px 60px #77585212; text-align:center; }
-    .count-card:before,.count-card:after { content:'✦'; position:absolute; color:#d8a5a0; opacity:.5; font-size:18px; }
-    .count-card:before { top:20px; left:24px } .count-card:after { bottom:20px; right:24px }
-    .count-label { color:var(--muted); font:600 11px system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; }
-    .days { color:var(--rose); font-size:clamp(90px,20vw,150px); line-height:.98; letter-spacing:-.07em; margin:14px 0 8px; font-variant-numeric:tabular-nums; }
-    .days-caption { font-size:18px; color:var(--muted); }
-    .clock { display:flex; justify-content:center; gap:12px; margin:23px auto 0; font:12px system-ui,sans-serif; color:var(--muted); }
-    .clock span { min-width:55px; padding:10px 8px; border-radius:12px; background:#f7eeea; }
-    .clock b { display:block; color:var(--ink); font:500 21px Georgia,serif; margin-bottom:4px; }
-    .note { text-align:center; padding:38px 18px 22px; }
-    .note .tiny-heart { color:var(--rose); font-size:22px; }
-    .note p { margin:12px auto 0; max-width:480px; font-size:17px; line-height:1.65; }
-    .weekly { margin-top:25px; border-top:1px solid var(--line); padding-top:26px; }
-    .weekly h2 { margin:0 0 8px; text-align:center; font-size:25px; font-weight:400; }
-    .weekly > p { text-align:center; color:var(--muted); margin:0 0 20px; font:13px system-ui,sans-serif; }
-    .weeks { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-    .week { min-height:105px; border:1px dashed #d9c6c0; border-radius:15px; background:#fffaf677; display:grid; place-content:center; text-align:center; color:var(--muted); padding:12px; }
-    .week strong { color:var(--rose); font:600 10px system-ui,sans-serif; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px; }
-    .week span { font-size:13px; line-height:1.4; }
-    footer { text-align:center; padding-top:31px; color:#9b898b; font:11px system-ui,sans-serif; letter-spacing:.08em; }
-    @media(max-width:540px) { main{padding-top:28px}.hero{padding:48px 4px 32px}.weeks{grid-template-columns:repeat(2,1fr)}.count-card{padding:27px 14px}.top{font-size:9px} }
-    /* Version sombre et minimaliste */
-    :root { --ink:#eee9e5; --muted:#777276; --rose:#d4c7c4; --paper:#090909; --line:#282628; }
-    html { background:#030303; }
-    body { min-height:100svh; background:transparent; color:#ded9d7; font-family:Arial,Helvetica,sans-serif; overflow:hidden; }
-    #sand { position:fixed; inset:0; z-index:0; width:100%; height:100%; opacity:.74; }
-    body::after { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at center,transparent 0%,#03030320 50%,#030303cf 100%); }
-    main { position:relative; z-index:1; min-height:100svh; width:min(100% - 36px,780px); padding:0; display:flex; flex-direction:column; justify-content:center; }
-    .top,.hero,.note,.weekly,footer { display:none; }
-    .count-card { position:relative; background:transparent; border:0; border-radius:0; box-shadow:none; padding:40px 18px; }
-    .count-card::before,.count-card::after { display:none; }
-    .count-card:before,.count-card:after { display:none; }
-    .count-label { color:#8e1717; font:700 10px Arial,sans-serif; letter-spacing:.42em; text-transform:uppercase; }
-    .divider { display:none; }
-    .days { display:none; }
-    .days-caption { color:#777; font:700 11px Arial,sans-serif; letter-spacing:.32em; text-transform:uppercase; }
-    .count-card { padding:40px 18px; }
-    .days-caption { margin-top:17px; }
-    .clock { display:flex; flex-wrap:nowrap; justify-content:center; gap:clamp(7px,3vw,27px); margin:24px auto 0; color:#5d5858; width:max-content; max-width:100%; }
-    .clock span { min-width:0; padding:8px 0; background:transparent; text-transform:uppercase; letter-spacing:.12em; font:9px Arial,sans-serif; white-space:nowrap; }
-    .clock b { color:#d7d3d3; font:500 clamp(20px,5vw,37px)/1 Arial,sans-serif; letter-spacing:-.04em; margin-bottom:9px; font-variant-numeric:tabular-nums; }
-    .ornament { display:none; }
-    .secret-trigger { position:fixed; z-index:2; left:18px; bottom:18px; width:14px; height:14px; padding:0; border:1px solid #481010; border-radius:0; background:#070707; cursor:pointer; opacity:.38; transition:opacity .2s,border-color .2s; }
-    .secret-trigger:hover,.secret-trigger:focus-visible { opacity:1; border-color:#a01818; outline:none; }
-    .secret-trigger::after { content:''; position:absolute; inset:3px; border-radius:0; background:#711010; }
-    .secret-window { position:fixed; z-index:2; left:18px; bottom:43px; width:min(310px,calc(100vw - 36px)); padding:20px 21px; color:#c9c3c3; background:#090909; border:1px solid #371010; box-shadow:0 14px 55px #000; opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .22s,transform .22s,visibility .22s; }
-    .secret-window.open { opacity:1; visibility:visible; transform:translateY(0); }
-    .secret-window small { display:block; margin-bottom:13px; color:#8e1717; font:700 9px Arial,sans-serif; letter-spacing:.3em; text-transform:uppercase; }
-    .secret-window p { margin:0; font:15px/1.5 Arial,sans-serif; }
-    main { width:100%; max-width:none; min-height:100svh; margin:0; padding:30px clamp(24px,6vw,100px); display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,.9fr); gap:clamp(18px,5vw,80px); align-items:center; }
-    .count-card { grid-column:1; grid-row:1; padding:32px 8px; }
-    .visual { grid-column:2; grid-row:1; min-width:0; height:min(90svh,900px); margin:0; position:relative; display:flex; justify-content:center; align-items:center; }
-    .visual img { display:block; width:100%; height:100%; object-fit:contain; object-position:center; filter:grayscale(1) contrast(1.15) brightness(.88); opacity:.9; }
-    .sand-flow { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
-    .visual::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,#030303 0%,transparent 23%,transparent 78%,#03030348 100%); }
-    .clock { margin-top:24px; }
-    @media(max-width:700px) {
-      body { overflow:auto; }
-      main { min-height:100svh; padding:36px 14px 20px; display:flex; flex-direction:column; justify-content:flex-start; gap:0; }
-      .count-card { flex:none; width:100%; padding:35px 0 18px; z-index:1; }
-      .visual { width:100%; height:54svh; min-height:300px; margin-top:-4px; }
-      .visual img { object-position:center 38%; }
-      .visual::after { background:linear-gradient(180deg,#030303 0%,transparent 22%,transparent 82%,#030303 100%); }
-      .clock { gap:clamp(8px,4vw,20px); }
-      .clock span { font-size:8px; letter-spacing:.08em; }
-      .clock b { font-size:clamp(19px,6vw,27px); }
+    :root {
+      color-scheme: dark;
+      --forest: #17251d;
+      --forest-deep: #101711;
+      --forest-ink: #202c24;
+      --sage: #8f9c87;
+      --sage-dim: #687667;
+      --ivory: #eee9dc;
+      --paper: #e8e3d5;
+      --paper-shadow: #05090666;
+      --rule: #8c95804d;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { min-width: 320px; min-height: 100%; background: var(--forest-deep); }
+    body {
+      min-height: 100svh;
+      margin: 0;
+      color: var(--ivory);
+      background:
+        radial-gradient(ellipse at 12% 12%, #31453644, transparent 42%),
+        radial-gradient(ellipse at 92% 86%, #293b2f38, transparent 38%),
+        repeating-linear-gradient(0deg, #ffffff03 0 1px, transparent 1px 5px),
+        var(--forest-deep);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    .page { width: min(1180px, calc(100% - 64px)); margin-inline: auto; padding: 36px 0 24px; }
+    .masthead { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:0 2px 23px; border-bottom:1px solid #dfe4d51c; }
+    .brand, .edition, .micro, .field-label, .status, .stamp, .evidence-caption, .countdown-label, .unit-label, .footnote {
+      font-family:var(--sans); text-transform:uppercase; letter-spacing:.19em;
+    }
+    .brand { color:var(--ivory); font-size:10px; font-weight:600; letter-spacing:.27em; }
+    .edition { color:#9ba692; font-size:9px; letter-spacing:.2em; text-align:right; }
+    .layout { display:grid; grid-template-columns:minmax(0,1.04fr) minmax(330px,.76fr); gap:clamp(36px,7vw,92px); align-items:center; padding:clamp(38px,7vh,78px) 0 40px; }
+    .file {
+      position:relative;
+      overflow:hidden;
+      min-height:560px;
+      padding:clamp(30px,4.5vw,58px);
+      color:var(--forest-ink);
+      border:1px solid #f1eddf8a;
+      background:
+        radial-gradient(ellipse at 15% 18%, #ffffff77, transparent 44%),
+        repeating-linear-gradient(0deg, #28362906 0 1px, transparent 1px 4px),
+        linear-gradient(135deg, #eee9dc, #e3dece);
+      box-shadow:0 28px 80px var(--paper-shadow), inset 0 0 0 7px #3544370a;
+      animation: file-arrive .8s cubic-bezier(.2,.75,.2,1) both;
+    }
+    .file::before, .file::after { content:""; position:absolute; width:26px; height:26px; pointer-events:none; }
+    .file::before { top:12px; left:12px; border-top:1px solid #63715e80; border-left:1px solid #63715e80; }
+    .file::after { right:12px; bottom:12px; border-right:1px solid #63715e80; border-bottom:1px solid #63715e80; }
+    .file-header { display:flex; align-items:center; justify-content:space-between; gap:14px; padding-bottom:16px; border-bottom:1px solid #52634d4d; }
+    .micro { margin:0; color:#56634f; font-size:9px; font-weight:650; letter-spacing:.21em; }
+    .file-mark { width:15px; height:15px; flex:0 0 auto; border:1px solid #70806c; transform:rotate(45deg); }
+    .file-number { display:flex; align-items:center; justify-content:space-between; gap:15px; margin-top:30px; }
+    .file-number .micro { font-size:9px; }
+    .stamp { display:inline-block; padding:7px 9px 6px; border:1px solid #354a3b8a; color:#405541; font-size:8px; font-weight:700; letter-spacing:.18em; transform:rotate(-5deg); }
+    h1 { margin:30px 0 11px; font-family:var(--serif); font-size:clamp(43px,6vw,74px); font-weight:400; line-height:.99; letter-spacing:-.035em; }
+    .dossier-title { margin:0; color:#64715f; font:500 10px/1.6 var(--sans); letter-spacing:.34em; text-transform:uppercase; }
+    .quote { max-width:450px; margin:27px 0 31px; padding-left:18px; border-left:1px solid #7a8973; color:#4a5549; font:italic 18px/1.65 var(--serif); }
+    .record { display:grid; grid-template-columns:1fr 1fr; border-top:1px solid #52634d4d; border-bottom:1px solid #52634d4d; }
+    .record-item { min-height:76px; padding:16px 12px 14px 0; }
+    .record-item + .record-item { padding-left:20px; border-left:1px solid #52634d4d; }
+    .field-label { display:block; margin-bottom:9px; color:#697463; font-size:8px; font-weight:650; letter-spacing:.18em; }
+    .status { display:flex; align-items:center; gap:8px; color:#35483a; font-size:9px; font-weight:700; letter-spacing:.14em; }
+    .status-dot { width:6px; height:6px; border-radius:50%; background:#657a66; box-shadow:0 0 0 3px #657a661c; }
+    .record-item:last-child .status-dot { background:#8b876c; box-shadow:0 0 0 3px #8b876c1c; }
+    .file-bottom { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin-top:25px; }
+    .botanical { width:38px; height:38px; color:#63745e; opacity:.72; }
+    .botanical-trigger { display:grid; place-items:center; flex:0 0 46px; width:46px; height:46px; margin:-4px; padding:4px; border:0; border-radius:50%; color:inherit; background:transparent; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:background .25s ease, opacity .25s ease, transform .35s ease; }
+    .botanical-trigger:hover { background:#65765a10; transform:rotate(-7deg); }
+    .botanical-trigger:focus-visible { outline:1px solid #50634d; outline-offset:3px; }
+    .botanical-trigger .botanical { width:38px; height:38px; }
+    .botanical-trigger[aria-pressed="true"] .botanical { opacity:1; }
+    .ref { color:#6d7768; font:9px/1.6 var(--sans); letter-spacing:.14em; text-align:right; }
+    .evidence { position:relative; min-width:0; padding:16px; border:1px solid #c8d0bf36; background:#090e0b; box-shadow:0 28px 80px #0005; animation: file-arrive .95s .08s cubic-bezier(.2,.75,.2,1) both; }
+    .evidence::before { content:""; position:absolute; z-index:1; inset:7px; border:1px solid #c8d0bf21; pointer-events:none; }
+    .evidence-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 3px 13px; }
+    .evidence-caption { color:#a4ad9d; font-size:8px; font-weight:600; letter-spacing:.2em; }
+    .evidence-index { color:#6f7a6d; font:9px var(--sans); letter-spacing:.12em; }
+    .visual { position:relative; height:clamp(400px,64vh,650px); margin:0; overflow:hidden; background:#020302; }
+    .visual img { display:block; width:100%; height:100%; object-fit:cover; object-position:center 48%; filter:grayscale(1) sepia(.12) hue-rotate(75deg) saturate(.58) contrast(1.08) brightness(.82); opacity:.9; }
+    .visual::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,#060a070b 50%,#080d09a8 100%),linear-gradient(90deg,#080d092b,transparent 24%,transparent 78%,#080d092b); pointer-events:none; }
+    .sand-flow { position:absolute; z-index:2; inset:0; width:100%; height:100%; pointer-events:none; }
+    .evidence-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:13px 3px 1px; }
+    .evidence-foot span { color:#849080; font:8px/1.5 var(--sans); letter-spacing:.15em; text-transform:uppercase; }
+    .countdown { padding:26px 0 0; border-top:1px solid #dfe4d51c; }
+    .countdown-head { display:flex; align-items:center; justify-content:space-between; gap:15px; margin-bottom:20px; }
+    .countdown-label { margin:0; color:#bac2b3; font-size:9px; font-weight:650; letter-spacing:.25em; }
+    .target-mark { color:#899584; font:9px var(--sans); letter-spacing:.12em; }
+    .archive-entry { display:inline-flex; align-items:center; gap:10px; margin:23px 0 0; padding:10px 0; color:#9ba692; font:650 8px/1.4 var(--sans); letter-spacing:.2em; text-decoration:none; text-transform:uppercase; transition:color .2s ease; }
+    .archive-entry::before { content:""; width:7px; height:7px; border:1px solid currentColor; transform:rotate(45deg); }
+    .archive-entry:hover, .archive-entry:focus-visible { color:var(--ivory); }
+    .archive-entry:focus-visible { outline:1px solid var(--sage); outline-offset:4px; }
+    .clock { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); max-width:720px; }
+    .unit { position:relative; padding:0 18px; text-align:center; }
+    .unit:first-child { padding-left:0; }
+    .unit + .unit { border-left:1px solid #dfe4d526; }
+    .unit-value { display:block; color:#e9e6da; font:400 clamp(31px,5vw,55px)/1 var(--serif); font-variant-numeric:tabular-nums; letter-spacing:.015em; }
+    .unit-label { display:block; margin-top:11px; color:#879281; font-size:8px; font-weight:600; letter-spacing:.2em; }
+    .finished { margin:18px 0 0; color:#cad1c3; font:15px/1.55 var(--serif); }
+    [hidden] { display:none !important; }
+    .case-dialog { width:min(650px,calc(100% - 32px)); max-width:none; max-height:min(90svh,900px); margin:auto; padding:0; overflow:auto; border:1px solid #e8e3d56b; color:var(--forest-ink); background:transparent; box-shadow:0 30px 100px #0009; }
+    .case-dialog::backdrop { background:#080e0bdc; backdrop-filter:blur(7px); }
+    .dialog-sheet { position:relative; padding:clamp(24px,5vw,42px); background:radial-gradient(ellipse at 14% 12%,#ffffff77,transparent 44%),repeating-linear-gradient(0deg,#28362906 0 1px,transparent 1px 4px),linear-gradient(135deg,#eee9dc,#e3dece); }
+    .dialog-head { display:flex; align-items:center; justify-content:space-between; gap:14px; padding-bottom:15px; border-bottom:1px solid #52634d4d; }
+    .dialog-kicker { margin:0; color:#596650; font:650 9px/1.5 var(--sans); letter-spacing:.2em; text-transform:uppercase; }
+    .close-dialog { flex:0 0 auto; min-height:42px; padding:9px 11px; border:1px solid #65745d7a; color:#40513f; background:transparent; font:650 8px var(--sans); letter-spacing:.14em; text-transform:uppercase; cursor:pointer; }
+    .close-dialog:hover, .close-dialog:focus-visible { color:#eee9dc; background:#26392d; outline:2px solid #74806e; outline-offset:2px; }
+    .discovery-note { margin:24px 0 28px; padding:1px 0 1px 16px; border-left:1px solid #778771; color:#405041; font:italic 17px/1.55 var(--serif); }
+    .riddle-heading { margin:0; color:#586650; font:650 8px/1.5 var(--sans); letter-spacing:.2em; text-transform:uppercase; }
+    .riddle-question { margin:10px 0 20px; font:400 clamp(25px,5vw,35px)/1.2 var(--serif); }
+    .choices { display:grid; gap:0; margin:0; padding:0; border:0; border-top:1px solid #63705a42; }
+    .choices legend { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; clip-path:inset(50%); }
+    .choice { display:grid; grid-template-columns:20px 24px minmax(0,1fr); align-items:start; gap:9px; padding:14px 9px; border-bottom:1px solid #63705a42; color:#354238; font:15px/1.45 var(--serif); cursor:pointer; transition:background .2s ease; }
+    .choice:hover, .choice:focus-within { background:#65765a10; }
+    .choice input { appearance:none; width:15px; height:15px; margin:2px 0 0; border:1px solid #75816f; border-radius:50%; background:transparent; cursor:pointer; }
+    .choice input:checked { border:4px solid #415541; background:#e8e3d5; }
+    .choice input:focus-visible { outline:2px solid #415541; outline-offset:3px; }
+    .choice-key { color:#78816f; font:650 9px/1.9 var(--sans); letter-spacing:.12em; }
+    .dialog-actions { display:flex; align-items:center; gap:16px; margin-top:19px; }
+    .verify-answer { min-height:46px; padding:12px 17px; border:1px solid #1b2e22; color:#eee9dc; background:#1d3024; font:650 9px var(--sans); letter-spacing:.15em; text-transform:uppercase; cursor:pointer; transition:background .2s ease, transform .2s ease; }
+    .verify-answer:hover:not(:disabled), .verify-answer:focus-visible { background:#2e4937; outline:2px solid #71816d; outline-offset:2px; }
+    .verify-answer:active:not(:disabled) { transform:translateY(1px); }
+    .verify-answer:disabled { opacity:.65; cursor:default; }
+    .feedback { min-height:1.5em; margin:0; color:#56634f; font:italic 13px/1.5 var(--serif); }
+    .fragment-card { padding:24px 21px 20px; border:1px solid #67735b70; background:#f0ebde80; }
+    .fragment-card.is-revealed { animation:fragment-arrive .65s cubic-bezier(.2,.75,.2,1) both; }
+    .fragment-label { margin:0 0 17px; color:#52634d; font:700 9px/1.5 var(--sans); letter-spacing:.2em; text-transform:uppercase; }
+    .fragment-copy { margin:0; color:#354238; font:italic 22px/1.55 var(--serif); }
+    .fragment-remaining { margin:19px 0 0; padding-top:13px; border-top:1px solid #63705a42; color:#6b7565; font:8px/1.6 var(--sans); letter-spacing:.16em; text-transform:uppercase; }
+    @keyframes fragment-arrive { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .page-foot { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:28px; padding-top:14px; border-top:1px solid #dfe4d514; color:#647061; font:8px/1.5 var(--sans); letter-spacing:.16em; text-transform:uppercase; }
+    .page-foot span:last-child { text-align:right; }
+    .archive-room { margin-top:40px; padding:34px 0 14px; border-top:1px solid #dfe4d51c; scroll-margin-top:22px; }
+    .archive-room-head { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; margin-bottom:22px; }
+    .archive-room h2 { margin:0; color:#e7e5d9; font:400 clamp(25px,4vw,38px)/1.15 var(--serif); }
+    .archive-room-intro { margin:8px 0 0; color:#899584; font:9px/1.5 var(--sans); letter-spacing:.16em; text-transform:uppercase; }
+    .archive-seal { flex:0 0 auto; padding:7px 9px; border:1px solid #9ea99252; color:#9ea992; font:700 7px/1.4 var(--sans); letter-spacing:.18em; text-transform:uppercase; transform:rotate(-3deg); }
+    .archive-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .archive-panel { min-width:0; padding:19px 20px; border:1px solid #dfe4d51c; background:#ffffff04; }
+    .archive-panel h3 { margin:0 0 15px; color:#c8cfbf; font:650 8px/1.5 var(--sans); letter-spacing:.2em; text-transform:uppercase; }
+    .fragment-list, .case-list, .investigation-log { margin:0; padding:0; list-style:none; }
+    .archive-empty { color:#788375; font:italic 14px/1.5 var(--serif); }
+    .archive-fragment { padding:12px 0 2px; border-top:1px solid #dfe4d51c; }
+    .archive-fragment:first-child { padding-top:0; border-top:0; }
+    .archive-fragment-title { margin:0 0 7px; color:#aab39f; font:650 8px/1.5 var(--sans); letter-spacing:.12em; text-transform:uppercase; }
+    .archive-fragment blockquote { margin:0; color:#d9d8ce; font:italic 15px/1.55 var(--serif); }
+    .archive-annex { margin-top:15px; padding-top:13px; border-top:1px solid #dfe4d51c; }
+    .archive-annex-copy { margin:0; color:#879281; font:10px/1.5 var(--sans); }
+    .case-list { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; }
+    .case-record { display:flex; min-height:67px; flex-direction:column; justify-content:space-between; padding:9px 8px; border:1px solid #dfe4d520; }
+    .case-record strong { color:#c4ccbb; font:500 12px var(--serif); }
+    .case-record span { color:#82907f; font:650 6px/1.4 var(--sans); letter-spacing:.12em; text-transform:uppercase; }
+    .case-record.locked { border-style:dashed; opacity:.7; }
+    .case-record.locked strong { color:#899282; }
+    .investigation-log { display:grid; gap:12px; }
+    .log-entry { position:relative; padding-left:14px; border-left:1px solid #78857169; }
+    .log-entry::before { content:""; position:absolute; top:3px; left:-3px; width:5px; height:5px; border-radius:50%; background:#879580; }
+    .log-title { margin:0; color:#d1d4c8; font:500 14px/1.4 var(--serif); }
+    .log-detail { margin:3px 0 0; color:#879281; font:10px/1.5 var(--sans); }
+    .log-date { display:block; margin-top:5px; color:#657061; font:7px/1.5 var(--sans); letter-spacing:.12em; text-transform:uppercase; }
+    .progress-copy { display:flex; align-items:baseline; justify-content:space-between; gap:10px; color:#cdd2c5; font:15px/1.4 var(--serif); }
+    .progress-copy strong { color:#a7b19e; font:650 9px var(--sans); letter-spacing:.12em; }
+    .fragment-progress { display:block; width:100%; height:3px; margin-top:12px; border:0; appearance:none; background:#dfe4d51a; }
+    .fragment-progress::-webkit-progress-bar { background:#dfe4d51a; }
+    .fragment-progress::-webkit-progress-value { background:#89977f; transition:width .5s ease; }
+    .fragment-progress::-moz-progress-bar { background:#89977f; }
+    .progress-note { margin:10px 0 0; color:#788375; font:9px/1.5 var(--sans); }
+    .week-one { margin:42px 0 8px; padding:34px 0 28px; border-top:1px solid #dfe4d51c; scroll-margin-top:18px; }
+    .week-head { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:18px; margin-bottom:24px; }
+    .week-kicker { margin:0 0 9px; color:#9ba692; font:650 8px/1.5 var(--sans); letter-spacing:.22em; text-transform:uppercase; }
+    .week-head h2 { margin:0; color:#e7e5d9; font:400 clamp(27px,4vw,42px)/1.12 var(--serif); }
+    .week-deck { max-width:620px; margin:10px 0 0; color:#899584; font:13px/1.65 var(--serif); }
+    .week-stamp { padding:8px 10px; border:1px solid #9ea99252; color:#9ea992; font:700 7px/1.45 var(--sans); letter-spacing:.17em; text-align:center; text-transform:uppercase; transform:rotate(-2deg); }
+    .week-section { margin-top:22px; padding:22px; border:1px solid #dfe4d51c; background:#ffffff04; }
+    .week-section-head { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin-bottom:15px; }
+    .week-section h3 { margin:0; color:#c8cfbf; font:650 9px/1.5 var(--sans); letter-spacing:.19em; text-transform:uppercase; }
+    .week-section-head p { margin:0; color:#788375; font:8px/1.5 var(--sans); letter-spacing:.1em; text-align:right; text-transform:uppercase; }
+    .record-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .record-card { min-width:0; border:1px solid #dfe4d51d; background:#080d0a44; }
+    .record-card summary { position:relative; display:flex; justify-content:space-between; align-items:center; gap:12px; min-height:64px; padding:13px 15px; color:#d4d6ca; font:400 17px/1.3 var(--serif); cursor:pointer; list-style:none; }
+    .record-card summary::-webkit-details-marker { display:none; }
+    .record-card summary::after { content:"+"; color:#98a48f; font:15px var(--sans); }
+    .record-card[open] summary::after { content:"−"; }
+    .record-card summary:focus-visible, .week-one button:focus-visible, .week-one input:focus-visible + span, .week-one select:focus-visible { outline:2px solid #a4b19a; outline-offset:3px; }
+    .record-id { display:block; margin-bottom:4px; color:#82907f; font:650 7px/1.4 var(--sans); letter-spacing:.17em; text-transform:uppercase; }
+    .record-body { padding:0 15px 16px; color:#b7beb0; font:14px/1.7 var(--serif); }
+    .record-body p { margin:0 0 10px; }
+    .record-body p:last-child { margin-bottom:0; }
+    .record-source { display:block; margin-top:12px; color:#758172; font:7px/1.5 var(--sans); letter-spacing:.13em; text-transform:uppercase; }
+    .record-annotation { margin-top:13px !important; padding:10px 11px; border-left:1px solid #87947f; color:#d5d8ca; background:#dfe4d508; font-style:italic; }
+    .audit-list { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
+    .audit-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(150px,.45fr); align-items:center; gap:12px; padding:12px 13px; border:1px solid #dfe4d51c; }
+    .audit-statement { color:#c8cfc2; font:14px/1.55 var(--serif); }
+    .audit-select { min-height:42px; width:100%; padding:8px 10px; border:1px solid #77836e7a; color:#e1e3d8; background:#131b16; font:11px var(--sans); }
+    .text-puzzle-input { min-height:46px; width:min(100%,440px); padding:11px 13px; border:1px solid #77836e8c; border-radius:0; color:#e7e5d9; background:#0c120e; font:16px/1.4 var(--serif); }
+    .text-puzzle-input::placeholder { color:#697566; }
+    .field-puzzle { max-width:790px; }
+    .puzzle-copy { max-width:700px; margin:0 0 16px; color:#b9c0b3; font:15px/1.7 var(--serif); }
+    .prerequisite-note { margin:0 0 14px; padding:11px 13px; border-left:1px solid #89977f; color:#9eaa97; background:#ffffff05; font:11px/1.6 var(--sans); letter-spacing:.04em; }
+    .puzzle-options { display:grid; gap:7px; margin:0; padding:0; border:0; }
+    .puzzle-option { display:grid; grid-template-columns:17px 24px minmax(0,1fr); align-items:start; gap:9px; padding:12px; border:1px solid #dfe4d51c; color:#cdd2c5; font:14px/1.5 var(--serif); cursor:pointer; }
+    .puzzle-option:hover, .puzzle-option:focus-within { background:#ffffff08; }
+    .puzzle-option input { accent-color:#89977f; margin:3px 0 0; }
+    .puzzle-key { color:#82907f; font:650 8px/1.9 var(--sans); letter-spacing:.1em; }
+    .week-actions { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:14px; }
+    .week-one button.action-button, .week-one button.subtle-button { min-height:42px; padding:10px 13px; border:1px solid #71806d7d; color:#d9ddd1; background:#1b2920; font:650 8px/1.4 var(--sans); letter-spacing:.14em; text-transform:uppercase; cursor:pointer; }
+    .week-one button.subtle-button { color:#9da895; background:transparent; }
+    .week-one button.action-button:hover, .week-one button.subtle-button:hover { background:#2b3c30; }
+    .week-feedback { min-height:1.5em; margin:0; color:#aeb8a5; font:italic 13px/1.5 var(--serif); }
+    .hint-block { margin-top:13px; padding:12px 14px; border:1px solid #dfe4d51c; color:#b6bfad; font:13px/1.6 var(--serif); }
+    .mini-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .mini-card { min-width:0; padding:17px; border:1px solid #dfe4d51c; background:#080d0a44; }
+    .mini-card h4 { margin:0 0 8px; color:#c5cdbd; font:400 19px/1.35 var(--serif); }
+    .mini-card > p { margin:0 0 13px; color:#899584; font:12px/1.6 var(--serif); }
+    .mini-card label { display:flex; min-height:44px; align-items:center; gap:8px; padding:8px 0; color:#bfc6b8; font:13px/1.5 var(--serif); cursor:pointer; }
+    .mini-card input { flex:0 0 auto; margin:3px 0 0; accent-color:#89977f; }
+    .mini-card .week-feedback { margin-top:10px; }
+    .botanical-mini { display:inline-grid; place-items:center; width:44px; height:44px; margin:3px 0 10px; border:1px solid #7885715e; border-radius:50%; color:#a6b29c; background:transparent; cursor:pointer; touch-action:manipulation; }
+    .botanical-mini svg { width:19px; height:19px; }
+    .redacted-line { display:inline-block; min-width:84px; min-height:44px; padding:9px; border:0; color:#d7ddcf; background:#546251; font:650 8px var(--sans); letter-spacing:.1em; cursor:pointer; touch-action:manipulation; }
+    .redacted-line[aria-expanded="true"] { color:#d3dbc9; background:#354638; }
+    .board-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,.52fr); gap:16px; align-items:start; }
+    .board-select { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    .board-choice { display:flex; min-height:43px; align-items:center; gap:8px; padding:9px 10px; border:1px solid #dfe4d51c; color:#bfc6b8; font:12px/1.4 var(--serif); cursor:pointer; }
+    .board-choice input { accent-color:#89977f; }
+    .board-log { min-height:100%; padding:15px; border-left:1px solid #dfe4d51c; color:#909b8b; font:12px/1.65 var(--serif); }
+    .board-log ul { display:grid; gap:10px; margin:10px 0 0; padding-left:16px; }
+    .board-log li::marker { color:#93a08a; }
+    .collection { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
+    .collectible { min-height:115px; padding:13px; border:1px solid #dfe4d51c; }
+    .collectible.is-found { border-color:#9aa88b52; background:#c6d0bc08; }
+    .collectible-id { color:#82907f; font:650 7px/1.5 var(--sans); letter-spacing:.14em; text-transform:uppercase; }
+    .collectible h4 { margin:8px 0 5px; color:#c9d0c2; font:400 17px/1.25 var(--serif); }
+    .collectible p { margin:0; color:#849080; font:11px/1.5 var(--serif); }
+    .deep-file { position:relative; margin-top:16px; padding:20px; border:1px solid #a4ad9d4d; background:linear-gradient(135deg,#1b2820,#101711); }
+    .deep-file::before { content:"DOSSIER NON INDEXÉ"; position:absolute; top:14px; right:14px; color:#899584; font:650 6px var(--sans); letter-spacing:.16em; }
+    .deep-file h4 { margin:0 0 9px; color:#d4d8cb; font:400 22px var(--serif); }
+    .deep-file p { max-width:650px; color:#aab3a2; font:14px/1.7 var(--serif); }
+    .annotation-strip { margin-top:10px; padding:12px 14px; border-left:1px solid #92a087; color:#aeb8a5; background:#ffffff05; font:italic 13px/1.6 var(--serif); }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .evidence-mark-trigger { display:grid; place-items:center; flex:0 0 46px; width:46px; height:46px; margin:-16px -10px -16px 0; padding:8px; border:0; border-radius:50%; color:#98a48f; background:transparent; opacity:.67; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:opacity .25s ease, transform .35s ease, background .25s ease; }
+    .evidence-mark-trigger:hover { opacity:1; transform:rotate(8deg); background:#dfe4d50d; }
+    .evidence-mark-trigger:focus-visible { outline:1px solid #a4b19a; outline-offset:2px; opacity:1; }
+    .evidence-mark { width:25px; height:25px; }
+    .document-dialog { width:min(560px,calc(100% - 32px)); max-width:none; max-height:min(88svh,820px); margin:auto; padding:0; overflow:auto; border:1px solid #dfe4d54d; color:var(--ivory); background:#121b15; box-shadow:0 30px 100px #0009; }
+    .document-dialog::backdrop { background:#080e0bdc; backdrop-filter:blur(7px); }
+    .document-sheet { position:relative; padding:clamp(25px,5vw,42px); background:radial-gradient(ellipse at 85% 10%,#3646383b,transparent 40%),repeating-linear-gradient(0deg,#ffffff03 0 1px,transparent 1px 5px),#131c16; }
+    .document-head { display:flex; justify-content:space-between; align-items:center; gap:14px; padding-bottom:14px; border-bottom:1px solid #dfe4d526; }
+    .document-head h2 { margin:0; color:#c6cebc; font:650 8px/1.6 var(--sans); letter-spacing:.19em; text-transform:uppercase; }
+    .document-copy { margin:24px 0; padding:21px 19px; border:1px solid #dfe4d524; color:#e2e2d8; font:italic 19px/2 var(--serif); }
+    .redaction { display:inline-block; min-height:1.2em; margin:0 2px; padding:0 5px; border:0; color:#e4e1d6; background:#687466; font:650 .62em/1.5 var(--sans); letter-spacing:.1em; vertical-align:.12em; cursor:pointer; transition:color .3s ease, background .3s ease, box-shadow .3s ease; }
+    .redaction:hover, .redaction:focus-visible { background:#87947f; outline:1px solid #aab39f; outline-offset:2px; }
+    .redaction.is-revealed { color:#d5dece; background:#3a4b3c; box-shadow:0 0 14px #91a08330; animation:reveal-ink .5s ease both; }
+    @keyframes reveal-ink { from { opacity:.35; letter-spacing:.35em; } to { opacity:1; letter-spacing:.1em; } }
+    .document-note { margin:0; color:#879281; font:8px/1.7 var(--sans); letter-spacing:.15em; text-transform:uppercase; }
+    @keyframes file-arrive { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    @media (max-width: 800px) {
+      .page { width:min(680px,calc(100% - 36px)); padding-top:24px; }
+      .layout { grid-template-columns:1fr; gap:24px; padding:34px 0 30px; }
+      .file { min-height:0; }
+      .visual { height:min(72svh,580px); min-height:390px; }
+      .evidence { max-width:540px; width:100%; justify-self:center; }
+      .countdown { padding-top:22px; }
+      .archive-grid { grid-template-columns:1fr; }
+      .case-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
+      .record-grid, .mini-grid { grid-template-columns:1fr; }
+      .audit-row { grid-template-columns:1fr; gap:8px; }
+      .board-layout { grid-template-columns:1fr; }
+      .board-log { border-top:1px solid #dfe4d51c; border-left:0; }
+      .collection { grid-template-columns:1fr; }
+    }
+    @media (max-width: 480px) {
+      .page { width:calc(100% - 28px); padding-top:19px; }
+      .masthead { padding-bottom:16px; }
+      .brand { font-size:9px; }
+      .edition { max-width:150px; font-size:8px; line-height:1.5; }
+      .layout { gap:18px; padding-top:24px; }
+      .file { padding:27px 23px 25px; }
+      .file-header { padding-bottom:13px; }
+      .stamp { font-size:7px; }
+      .file-number { margin-top:24px; }
+      h1 { margin-top:25px; font-size:clamp(42px,13vw,59px); }
+      .quote { margin:22px 0 25px; font-size:16px; }
+      .record-item { min-height:72px; padding-right:7px; }
+      .record-item + .record-item { padding-left:12px; }
+      .field-label { font-size:7px; letter-spacing:.13em; }
+      .status { gap:6px; font-size:8px; letter-spacing:.09em; }
+      .visual { height:63svh; min-height:340px; }
+      .evidence { padding:12px; }
+      .clock { width:100%; }
+      .unit { padding:0 8px; }
+      .unit-value { font-size:clamp(29px,9vw,42px); }
+      .unit-label { font-size:7px; letter-spacing:.13em; }
+      .target-mark { font-size:8px; }
+      .page-foot { font-size:7px; letter-spacing:.12em; }
+      .case-dialog { width:calc(100% - 20px); max-height:92svh; }
+      .document-dialog { width:calc(100% - 20px); max-height:92svh; }
+      .dialog-sheet { padding:23px 19px; }
+      .discovery-note { margin:19px 0 23px; font-size:16px; }
+      .choice { grid-template-columns:18px 20px minmax(0,1fr); gap:7px; padding:13px 5px; font-size:14px; }
+      .dialog-actions { align-items:flex-start; flex-direction:column; gap:10px; }
+      .verify-answer { width:100%; }
+      .fragment-card { padding:20px 16px 17px; }
+      .fragment-copy { font-size:19px; }
+      .document-sheet { padding:23px 19px; }
+      .document-copy { padding:17px 14px; font-size:17px; }
+      .case-record { min-height:62px; padding:8px 6px; }
+      .case-record strong { font-size:11px; }
+      .case-record span { font-size:5px; }
+      .week-section { padding:16px 13px; }
+      .week-head { grid-template-columns:minmax(0,1fr) auto; align-items:start; }
+      .week-stamp { max-width:86px; font-size:6px; }
+      .week-section-head { align-items:flex-start; flex-direction:column; }
+      .week-section-head p { text-align:left; }
+      .board-select { grid-template-columns:1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="top"><span>Un petit quelque chose pour toi</span><span class="heart">♥</span></div>
-    <section class="hero">
-      <div class="eyebrow">Chaque jour nous rapproche</div>
-      <h1>Plus que<br>quelques dodos…</h1>
-      <p class="intro">J’ai préparé ce petit coin rien que pour toi. Le compte à rebours est lancé, et j’ai hâte de te retrouver.</p>
+  <main class="page">
+    <header class="masthead">
+      <div class="brand">Archives privées</div>
+      <div class="edition">DOSSIER 19.05 <span aria-hidden="true">·</span> ARCHIVE PERSONNELLE</div>
+    </header>
+
+    <div class="layout">
+      <article class="file" aria-labelledby="file-title">
+        <div class="file-header">
+          <p class="micro">Fonds privé <span aria-hidden="true">/</span> pièce d'origine</p>
+          <span class="file-mark" aria-hidden="true"></span>
+        </div>
+        <div class="file-number">
+          <span class="micro">Dossier N° 001</span>
+          <span class="stamp">Confidentiel</span>
+        </div>
+        <h1 id="file-title">L'ORIGINE</h1>
+        <p class="dossier-title">DOSSIER 19.05 <span aria-hidden="true">—</span> NOTE D'ARCHIVE</p>
+        <blockquote class="quote">« Toute histoire possède un point de départ. Toutes ne sont pas destinées à être oubliées. »</blockquote>
+
+        <div class="record" aria-label="État du dossier">
+          <div class="record-item">
+            <span class="field-label">Statut</span>
+            <span class="status"><i class="status-dot" aria-hidden="true"></i>Enquête ouverte</span>
+          </div>
+          <div class="record-item">
+            <span class="field-label">Accès</span>
+            <span class="stamp restricted-stamp">Accès restreint</span>
+          </div>
+        </div>
+        <div class="file-bottom">
+          <button class="botanical-trigger" id="botanical-trigger" type="button" aria-label="Examiner le symbole botanique" aria-haspopup="dialog" aria-controls="case-dialog" aria-pressed="false">
+            <svg class="botanical" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+              <path d="M9 31C17 27 23 19 29 8M12 28c-1-6 1-9 5-11 2 5 1 8-5 11Zm7-7c0-6 3-9 8-10 1 5-1 8-8 10Zm-3 5c4 0 7 2 8 6-4 1-7-1-8-6Z" stroke="currentColor" stroke-width=".8"/>
+              <circle cx="29" cy="8" r="1.2" fill="currentColor"/>
+            </svg>
+          </button>
+          <span class="ref">Référence : 19.05 / 001<br>Consultation sous réserve</span>
+        </div>
+      </article>
+
+      <section class="evidence" aria-label="Pièce visuelle d'archive">
+        <div class="evidence-head">
+          <span class="evidence-caption">Pièce jointe <span aria-hidden="true">/</span> 01</span>
+          <span class="evidence-index">19.05—A</span>
+        </div>
+        <figure class="visual">
+          <img id="hourglass-image" src="hourglass-reference.jpg" alt="Sable s'écoulant dans un sablier de verre, sur fond sombre">
+          <canvas class="sand-flow" id="sand-flow" aria-hidden="true"></canvas>
+        </figure>
+        <div class="evidence-foot"><span>Pièce conservée aux archives</span><button class="evidence-mark-trigger" id="secret-document-trigger" type="button" aria-label="Examiner la marque dans la pièce jointe" aria-haspopup="dialog" aria-controls="secret-document-dialog" aria-pressed="false">
+          <svg class="evidence-mark" viewBox="0 0 28 28" fill="none" aria-hidden="true" focusable="false"><path d="M14 3v22M3 14h22M6.2 6.2l15.6 15.6m0-15.6L6.2 21.8" stroke="currentColor" stroke-width=".75"/><circle cx="14" cy="14" r="3.1" stroke="currentColor" stroke-width=".75"/></svg>
+        </button></div>
+      </section>
+    </div>
+
+    <section class="countdown" aria-labelledby="countdown-title">
+      <div class="countdown-head">
+        <h2 class="countdown-label" id="countdown-title">Prochaine ouverture</h2>
+        <span class="target-mark">ÉCHÉANCE FIXE <span aria-hidden="true">/</span> 01</span>
+      </div>
+      <div class="clock" role="timer" aria-label="Compte à rebours jusqu'à la prochaine ouverture">
+        <div class="unit"><span class="unit-value" id="days">—</span><span class="unit-label">Jours</span></div>
+        <div class="unit"><span class="unit-value" id="hours">—</span><span class="unit-label">Heures</span></div>
+        <div class="unit"><span class="unit-value" id="minutes">—</span><span class="unit-label">Minutes</span></div>
+        <div class="unit"><span class="unit-value" id="seconds">—</span><span class="unit-label">Secondes</span></div>
+      </div>
+      <p class="finished" id="finished-message" role="status" hidden>Le délai est écoulé. Revenez consulter cette archive ultérieurement.</p>
+      <a class="archive-entry" href="#archives-enquete">Archives de l'enquête</a>
     </section>
-    <section class="count-card" aria-live="polite">
-      <div class="ornament" aria-hidden="true"></div>
-      <div class="count-label">Le décompte</div>
-      <div class="divider" aria-hidden="true"></div>
-      <div class="days" id="days">40</div>
-      <div class="days-caption" id="days-caption">temps restant</div>
-      <div class="clock" aria-label="Temps restant aujourd’hui">
-        <span><b id="days-inline">40</b>jours</span><span><b id="hours">00</b>heures</span><span><b id="minutes">00</b>minutes</span><span><b id="seconds">00</b>secondes</span>
+
+    <section class="week-one" id="dossier-001" aria-labelledby="week-one-title">
+      <header class="week-head">
+        <div>
+          <p class="week-kicker">Semaine 01 <span aria-hidden="true">/</span> Enquête de terrain</p>
+          <h2 id="week-one-title">Le premier déplacement</h2>
+          <p class="week-deck">Quatre pièces établissent un ordre. Les souvenirs indiquent la nature du lieu; aucune adresse ni date exacte n'a été conservée.</p>
+        </div>
+        <span class="week-stamp">Consultation<br>personnelle</span>
+      </header>
+
+      <section class="week-section" aria-labelledby="records-title">
+        <div class="week-section-head"><h3 id="records-title">Pièces versées au dossier</h3><p id="records-progress">0 / 4 pièces examinées</p></div>
+        <div class="record-grid" id="week-record-grid"></div>
+      </section>
+
+      <section class="week-section" aria-labelledby="source-audit-title">
+        <div class="week-section-head"><h3 id="source-audit-title">Protocole de source · établi / déduit / absent</h3><p>Avant de résoudre, distingue le fait de la lacune</p></div>
+        <p class="puzzle-copy">Un dossier fiable n'invente pas ce qui manque. Pour chaque proposition, indique si elle est attestée, déduite des pièces ou absente du relevé.</p>
+        <form id="source-audit-form"><ol class="audit-list" id="source-audit-list"></ol><div class="week-actions"><button class="action-button" type="submit">Vérifier le protocole</button><button class="subtle-button" type="button" id="audit-hint">Demander un indice</button><p class="week-feedback" id="audit-feedback" role="status" aria-live="polite"></p></div><p class="hint-block" id="audit-hint-copy" hidden></p></form>
+      </section>
+
+      <section class="week-section field-puzzle" aria-labelledby="field-puzzle-title">
+        <div class="week-section-head"><h3 id="field-puzzle-title">Déduction principale · point de départ</h3><p>Une seule réponse concorde avec les pièces</p></div>
+        <p class="puzzle-copy">Distingue le lieu où vous vous êtes rencontrés, celui des discussions ultérieures et le lieu d'une autre soirée. La première étape physique de cette enquête est l'endroit où la voiture attendait avant le premier trajet.</p>
+        <p class="prerequisite-note" id="field-prerequisite">Avant de conclure, vérifie les sources, puis établis les trois concordances requises entre le club, le trajet, le gymnase et la soirée d'Ottignies.</p>
+        <form id="field-form">
+          <label class="record-id" for="field-answer">Conclusion provisoire · point de départ de terrain</label>
+          <input class="text-puzzle-input" id="field-answer" name="field-answer" type="text" autocomplete="off" placeholder="Formule la conclusion en tes mots" aria-describedby="field-prerequisite">
+          <div class="week-actions"><button class="action-button" type="submit" id="field-submit">Déposer la conclusion</button><button class="subtle-button" type="button" id="field-hint">Consulter un indice</button><p class="week-feedback" id="field-feedback" role="status" aria-live="polite"></p></div>
+          <p class="hint-block" id="field-hint-copy" hidden></p>
+        </form>
+        <div class="annotation-strip" id="field-reward" hidden></div>
+      </section>
+
+      <section class="week-section" aria-labelledby="mini-title">
+        <div class="week-section-head"><h3 id="mini-title">Contre-enquête · pistes facultatives</h3><p>Chaque résolution est consignée une seule fois</p></div>
+        <div class="mini-grid">
+          <article class="mini-card" data-mini-card="anomaly">
+            <span class="record-id">Contrôle de transcription · exercice</span><h4>L'anomalie d'index</h4>
+            <p>Cette fiche de contrôle est une reconstitution didactique; une ligne a été volontairement altérée. Compare-la à la pièce 001—A.</p>
+            <p class="annotation-strip">Discipline indexée : « judo »<br>Adresse d'archive : « Institut Saint-Jean-Baptiste »</p>
+            <form data-mini-form="anomaly">
+              <label><input type="radio" name="anomaly-answer" value="discipline"> La discipline indexée</label>
+              <label><input type="radio" name="anomaly-answer" value="address"> L'adresse d'archive</label>
+              <div class="week-actions"><button class="subtle-button" type="submit">Valider l'anomalie</button><button class="subtle-button" type="button" data-hint="anomaly">Indice</button></div><p class="hint-block" data-hint-copy="anomaly" hidden></p><p class="week-feedback" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+          <article class="mini-card" data-mini-card="type">
+            <span class="record-id">Clé typographique · pièce 001—E</span><h4>Le marquage de classement</h4>
+            <p>La règle imprimée précise : « l'entrée en italique indique le premier geste; vérifie-la avec la pièce de déplacement ».</p>
+            <p class="annotation-strip">RENCONTRE &nbsp; / &nbsp; <em>PREMIER PAS</em> &nbsp; / &nbsp; HABITUDE</p>
+            <form data-mini-form="type">
+              <label><input type="radio" name="type-answer" value="meeting"> La rencontre au club</label>
+              <label><input type="radio" name="type-answer" value="ride"> La demande de covoiturage</label>
+              <label><input type="radio" name="type-answer" value="habit"> Les discussions près du gymnase</label>
+              <div class="week-actions"><button class="subtle-button" type="submit">Consigner l'observation</button><button class="subtle-button" type="button" data-hint="type">Indice</button></div><p class="hint-block" data-hint-copy="type" hidden></p><p class="week-feedback" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+          <article class="mini-card" data-mini-card="redaction">
+            <span class="record-id">Archive censurée · pièce 001—F</span><h4>La démonstration</h4>
+            <p>« Au magasin de produits capillaires de l'Esplanade, la vendeuse voulait montrer la texture du produit. J'ai demandé si je pouvais <button class="redacted-line" type="button" data-redaction="request" aria-expanded="false">RÉVÉLER</button>. Elle a retiré le pot en précisant que c'était <button class="redacted-line" type="button" data-redaction="context" aria-expanded="false">RÉVÉLER</button>. »</p>
+            <p>La disposition protège deux segments qui ne doivent pas être confondus : la demande et le cadre de la démonstration.</p>
+            <form data-mini-form="redaction">
+              <label><input type="radio" name="redaction-answer" value="try"> Le pot pouvait être utilisé librement.</label>
+              <label><input type="radio" name="redaction-answer" value="demo"> Le produit était présenté pour montrer sa texture.</label>
+              <div class="week-actions"><button class="subtle-button" type="submit">Classer la pièce</button><button class="subtle-button" type="button" data-hint="redaction">Indice</button></div><p class="hint-block" data-hint-copy="redaction" hidden></p><p class="week-feedback" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+          <article class="mini-card" data-mini-card="private">
+            <span class="record-id">Référence privée · pièce 001—G</span><h4>Deux notes de marge</h4>
+            <p>Cette copie réunit deux plaisanteries déjà consignées dans les notes de l'enquête. Associe chaque indice au souvenir correspondant.</p>
+            <form data-mini-form="private">
+              <label><input type="radio" name="private-answer" value="potte"> « Chat Potté » : quand je tente de l'entourlouper intellectuellement.</label>
+              <label><input type="radio" name="private-answer" value="id"> La photo remplacée par une image générée sur l'abonnement de cinéma nominatif : la blague sur le gouvernement et la surveillance.</label>
+              <label><input type="radio" name="private-answer" value="both"> Les deux associations sont exactes.</label>
+              <div class="week-actions"><button class="subtle-button" type="submit">Valider les notes</button><button class="subtle-button" type="button" data-hint="private">Indice</button></div><p class="hint-block" data-hint-copy="private" hidden></p><p class="week-feedback" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+          <article class="mini-card" data-mini-card="botanical">
+            <span class="record-id">Signe dissimulé · marge du registre</span><h4>Le témoin végétal</h4>
+            <button class="botanical-mini" type="button" id="week-botanical" aria-label="Examiner le petit symbole botanique" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 20c6-3 9-8 12-15M7 17c-1-4 1-6 4-7 1 4 0 6-4 7Zm5-5c0-4 2-6 5-7 1 3 0 5-5 7Z" stroke="currentColor" stroke-width="1"/></svg></button>
+            <p id="botanical-feedback" class="week-feedback" role="status" aria-live="polite">Un détail de marge, sans fonction apparente.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="week-section" aria-labelledby="board-title">
+        <div class="week-section-head"><h3 id="board-title">Tableau des concordances</h3><p>Choisis deux pièces déjà examinées</p></div>
+        <p class="puzzle-copy">Relier des pièces ne les transforme pas en certitudes. Certaines associations ajoutent une annotation; les autres ne créent aucune pénalité.</p>
+        <div class="board-layout"><div><div class="board-select" id="board-select"></div><div class="week-actions"><button class="action-button" type="button" id="connect-evidence">Comparer les pièces</button><p class="week-feedback" id="board-feedback" role="status" aria-live="polite"></p></div></div><div class="board-log"><span class="record-id">Connexions établies</span><ul id="connection-log"><li>Aucune connexion consignée.</li></ul></div></div>
+      </section>
+
+      <section class="week-section" aria-labelledby="collection-title">
+        <div class="week-section-head"><h3 id="collection-title">Éclats et fragments</h3><p id="collection-progress">0 / 7 éclats retrouvés</p></div>
+        <p class="puzzle-copy">Le fragment principal 01/07 reste attaché à l'énigme d'ouverture. Les sept éclats ci-dessous sont des pièces d'enquête propres au dossier 001; ils ne débloquent pas les six dossiers suivants.</p>
+        <div class="collection" id="week-collection"></div>
+      </section>
+
+      <section class="week-section" aria-labelledby="annotations-title">
+        <div class="week-section-head"><h3 id="annotations-title">Registre des annotations</h3><p>Les pièces évoluent avec les découvertes</p></div>
+        <ul class="investigation-log" id="week-journal"><li class="archive-empty">Aucune nouvelle annotation.</li></ul>
+      </section>
+
+      <section class="deep-file" id="deep-file" aria-labelledby="deep-file-title" hidden>
+        <span class="record-id">Accès conditionnel · protocole + 4 pistes + 3 concordances</span>
+        <h4 id="deep-file-title">DOSSIER FANTÔME · Le premier geste</h4>
+        <p>Les pièces ne nomment pas le point de départ par une adresse. Elles indiquent une action et un emplacement relatif. Rédige l'action qui fait passer de la rencontre au premier trajet; ne complète pas la lacune par une adresse inconnue.</p>
+        <form id="deep-form">
+          <label class="record-id" for="deep-answer">Réponse construite · action déclenchante</label>
+          <input class="text-puzzle-input" id="deep-answer" type="text" autocomplete="off" placeholder="Action, pas lieu">
+          <div class="week-actions"><button class="action-button" type="submit">Classer la conclusion</button><button class="subtle-button" type="button" id="deep-hint">Indice</button><p class="week-feedback" id="deep-feedback" role="status" aria-live="polite"></p></div>
+          <p class="hint-block" id="deep-hint-copy" hidden></p>
+        </form>
+        <p class="annotation-strip" id="deep-reward" hidden></p>
+      </section>
+    </section>
+
+    <section class="archive-room" id="archives-enquete" aria-labelledby="archive-title">
+      <header class="archive-room-head">
+        <div>
+          <h2 id="archive-title">Archives de l'enquête</h2>
+          <p class="archive-room-intro">Registre des pièces et observations consignées</p>
+        </div>
+        <span class="archive-seal">Consultation restreinte</span>
+      </header>
+      <div class="archive-grid">
+        <section class="archive-panel" aria-labelledby="fragments-title">
+          <h3 id="fragments-title">Fragments retrouvés</h3>
+          <ul class="fragment-list" id="archive-fragment-list"></ul>
+          <p class="archive-empty" id="fragment-empty">Aucun fragment récupéré à ce jour.</p>
+          <div class="archive-annex" id="archive-annex" hidden>
+            <p class="archive-fragment-title">Document annexe consigné</p>
+            <p class="archive-annex-copy">Une pièce confidentielle a été versée aux archives.</p>
+          </div>
+        </section>
+        <section class="archive-panel" aria-labelledby="cases-title">
+          <h3 id="cases-title">Dossiers classés</h3>
+          <ol class="case-list" aria-label="Sept dossiers de l'enquête">
+            <li class="case-record"><strong>001</strong><span>L'Origine · Accessible</span></li>
+            <li class="case-record locked"><strong>002</strong><span>Accès restreint</span></li>
+            <li class="case-record locked"><strong>003</strong><span>Accès restreint</span></li>
+            <li class="case-record locked"><strong>004</strong><span>Accès restreint</span></li>
+            <li class="case-record locked"><strong>005</strong><span>Accès restreint</span></li>
+            <li class="case-record locked"><strong>006</strong><span>Accès restreint</span></li>
+            <li class="case-record locked"><strong>007</strong><span>Accès restreint</span></li>
+          </ol>
+        </section>
+        <section class="archive-panel" aria-labelledby="journal-title">
+          <h3 id="journal-title">Journal de l'enquête</h3>
+          <ol class="investigation-log" id="investigation-log"></ol>
+          <p class="archive-empty" id="journal-empty">Aucun événement consigné pour le moment.</p>
+        </section>
+        <section class="archive-panel" aria-labelledby="progress-title">
+          <h3 id="progress-title">État de l'enquête</h3>
+          <div class="progress-copy"><span id="progress-label">0 fragment découvert sur 7</span><strong id="progress-count">00 / 07</strong></div>
+          <progress class="fragment-progress" id="fragment-progress" max="7" value="0" aria-label="Progression des fragments"></progress>
+          <p class="progress-note">Les autres fragments demeurent inaccessibles.</p>
+        </section>
       </div>
     </section>
-      <figure class="visual"><img id="hourglass-image" src="hourglass-reference.jpg" alt="Sablier monochrome, le sable s’écoule dans l’obscurité"><canvas class="sand-flow" id="sand-flow" aria-hidden="true"></canvas></figure>
-    <section class="note">
-      <div class="tiny-heart">♡</div>
-      <p>En attendant, je pense à toi un peu plus fort chaque jour.</p>
-    </section>
-    <section class="weekly">
-      <h2>De petites surprises à venir</h2>
-      <p>Une nouvelle petite attention chaque semaine ✨</p>
-      <div class="weeks">
-        <div class="week"><strong>Semaine 1</strong><span>Une surprise arrive bientôt…</span></div>
-        <div class="week"><strong>Semaine 2</strong><span>À découvrir la semaine prochaine</span></div>
-        <div class="week"><strong>Semaine 3</strong><span>Un petit mot rien que pour toi</span></div>
-        <div class="week"><strong>Semaine 4</strong><span>Encore un peu de patience 💌</span></div>
-      </div>
-    </section>
-    <footer>FAIT AVEC AMOUR, POUR TOI</footer>
+
+    <footer class="page-foot"><span>Archives privées <span aria-hidden="true">·</span> Dossier 001</span><span>Fin de consultation <span aria-hidden="true">/</span> 19.05</span></footer>
   </main>
-  <button class="secret-trigger" id="secret-trigger" type="button" aria-label="Ouvrir le petit indice" aria-controls="secret-window" aria-expanded="false"></button>
-  <aside class="secret-window" id="secret-window" role="status" aria-hidden="true">
-    <small>Un petit indice</small>
-    <p>Garde un œil ici… chaque semaine, quelque chose va changer.</p>
-  </aside>
+
+  <dialog class="case-dialog" id="case-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-sheet">
+      <div class="dialog-head">
+        <p class="dialog-kicker" id="dialog-title">Accès restreint <span aria-hidden="true">/</span> dossier confidentiel</p>
+        <button class="close-dialog" id="close-dialog" type="button" aria-label="Fermer le dossier">Fermer <span aria-hidden="true">×</span></button>
+      </div>
+      <p class="discovery-note">Tu as remarqué quelque chose que les autres auraient ignoré.</p>
+      <section class="riddle-stage" id="riddle-stage" aria-labelledby="riddle-heading">
+        <p class="riddle-heading" id="riddle-heading">DOSSIER 001 — PREMIÈRE OBSERVATION</p>
+        <p class="riddle-question" id="riddle-question"></p>
+        <form id="riddle-form">
+          <fieldset class="choices" id="riddle-choices">
+            <legend>Choisis une réponse</legend>
+            <div id="answer-options"></div>
+          </fieldset>
+          <div class="dialog-actions">
+            <button class="verify-answer" id="verify-answer" type="submit">Vérifier ma réponse</button>
+            <p class="feedback" id="riddle-feedback" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+      <section class="fragment-card" id="fragment-card" aria-labelledby="fragment-label" hidden>
+        <p class="fragment-label" id="fragment-label"></p>
+        <blockquote class="fragment-copy" id="fragment-copy"></blockquote>
+        <p class="fragment-remaining" id="fragment-remaining"></p>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog class="document-dialog" id="secret-document-dialog" aria-labelledby="document-title">
+    <div class="document-sheet">
+      <div class="document-head">
+        <h2 id="document-title">Document confidentiel <span aria-hidden="true">/</span> pièce 19.05—B</h2>
+        <button class="close-dialog" id="close-document-dialog" type="button" aria-label="Fermer le document">Fermer <span aria-hidden="true">×</span></button>
+      </div>
+      <p class="document-copy">« Certaines <button class="redaction" type="button" data-redaction="dates" aria-label="Révéler le premier passage censuré" aria-expanded="false">█████</button> ne sont pas importantes pour tout le monde. Pourtant, elles peuvent <button class="redaction" type="button" data-redaction="conclusion" aria-label="Révéler le second passage censuré" aria-expanded="false">████████████████</button>. »</p>
+      <p class="document-note" id="document-note" role="status" aria-live="polite">Une partie du document demeure classée.</p>
+    </div>
+  </dialog>
+
   <script>
-    // Le compte à rebours démarre au premier affichage et reste identique sur cet appareil.
-    // Échéance fixe pour que le même lien affiche le même décompte sur tous les appareils.
-    const target = Date.parse('2026-11-12T13:01:29Z');
-    function update() {
-      const left = Math.max(0, target - Date.now());
-      const days = Math.floor(left / 86400000);
-      document.getElementById('days').textContent = days;
-      document.getElementById('days-inline').textContent = String(days).padStart(2,'0');
-      document.getElementById('days-caption').textContent = left > 0 ? 'temps restant' : 'fin du décompte';
-      document.getElementById('hours').textContent = String(Math.floor(left / 3600000) % 24).padStart(2,'0');
-      document.getElementById('minutes').textContent = String(Math.floor(left / 60000) % 60).padStart(2,'0');
-      document.getElementById('seconds').textContent = String(Math.floor(left / 1000) % 60).padStart(2,'0');
+    // Configure ici la date et l'heure absolues de la prochaine ouverture (format ISO 8601).
+    // Cette échéance est identique pour tous les visiteurs et ne redémarre pas à chaque visite.
+    const COUNTDOWN_TARGET = '2026-11-12T13:01:29Z';
+    const target = Date.parse(COUNTDOWN_TARGET);
+
+    // Les dossiers sont décrits comme des données afin d'ajouter les prochains sans réécrire l'interface.
+    const DOSSIERS = [
+      {
+        id: '001',
+        title: 'DOSSIER 001 — PREMIÈRE OBSERVATION',
+        question: "Qu'est-ce qui rend un endroit inoubliable ?",
+        choices: [
+          { id: 'A', text: "Ce qu'on y voit." },
+          { id: 'B', text: "Ce qu'on y vit." },
+          { id: 'C', text: "Les souvenirs qu'on y laisse." }
+        ],
+        answer: 'C',
+        incorrectMessage: 'Cette piste ne mène nulle part. Une autre observation est peut-être plus juste.',
+        fragment: {
+          id: 'DOSSIER-001-F01',
+          label: 'FRAGMENT RETROUVÉ : 01/07',
+          text: 'Parfois, les souvenirs donnent à un endroit une valeur que personne d’autre ne peut comprendre.',
+          origin: 'Première observation · DOSSIER 001',
+          condition: 'Résoudre la première énigme d’observation.'
+        }
+      }
+    ];
+    const PROGRESS_KEY = 'dossier-19.05.progress.v3';
+    const PREVIOUS_PROGRESS_KEYS = ['dossier-19.05.progress.v2', 'dossier-19.05.progress.v1'];
+    function emptyWeekOne() {
+      return { version: 2, records: [], solved: [], fragments: [], connections: [], auditAnswers: {}, auditSolved: false, fieldSolved: false, deepSolved: false, redactions: [], hintLevel: 0, auditHintSeen: false, hints: {}, deepHintLevel: 0, journal: [] };
     }
-    update(); setInterval(update, 1000);
-    const secretButton = document.getElementById('secret-trigger');
-    const secretWindow = document.getElementById('secret-window');
-    secretButton.addEventListener('click', () => {
-      const open = secretButton.getAttribute('aria-expanded') !== 'true';
-      secretButton.setAttribute('aria-expanded', String(open));
-      secretWindow.setAttribute('aria-hidden', String(!open));
-      secretWindow.classList.toggle('open', open);
+    function normalizeWeekOne(saved) {
+      const result = emptyWeekOne();
+      if (!saved || typeof saved !== 'object') return result;
+      const unique = values => Array.isArray(values) ? [...new Set(values.filter(value => typeof value === 'string'))] : [];
+      result.records = unique(saved.records);
+      result.solved = unique(saved.solved);
+      result.fragments = unique(saved.fragments);
+      result.connections = unique(saved.connections);
+      result.auditSolved = saved.auditSolved === true;
+      result.fieldSolved = saved.fieldSolved === true;
+      result.deepSolved = saved.deepSolved === true;
+      result.redactions = unique(saved.redactions);
+      if (saved.redactionRevealed === true && !result.redactions.includes('request')) result.redactions.push('request');
+      result.hintLevel = Math.max(0, Math.min(3, Number(saved.hintLevel) || 0));
+      result.auditHintSeen = saved.auditHintSeen === true;
+      result.deepHintLevel = Math.max(0, Math.min(2, Number(saved.deepHintLevel) || 0));
+      if (saved.hints && typeof saved.hints === 'object' && !Array.isArray(saved.hints)) Object.entries(saved.hints).forEach(([id, value]) => { if (typeof value === 'number') result.hints[id] = Math.max(0, Math.min(2, value)); });
+      if (saved.auditAnswers && typeof saved.auditAnswers === 'object' && !Array.isArray(saved.auditAnswers)) {
+        Object.entries(saved.auditAnswers).forEach(([id, value]) => { if (typeof value === 'string') result.auditAnswers[id] = value; });
+      }
+      result.journal = Array.isArray(saved.journal) ? saved.journal.filter(row => row && typeof row.id === 'string' && typeof row.title === 'string' && typeof row.detail === 'string').slice(-60).map(row => ({ id: row.id, title: row.title, detail: row.detail, timestamp: typeof row.timestamp === 'string' ? row.timestamp : null })) : [];
+      return result;
+    }
+    function emptyProgress() {
+      return { version: 3, discovered: false, solved: [], fragments: [], documentFound: false, revealed: [], journal: [], week1: emptyWeekOne() };
+    }
+    function readProgress() {
+      try {
+        let raw = window.localStorage.getItem(PROGRESS_KEY);
+        if (!raw) for (const key of PREVIOUS_PROGRESS_KEYS) { raw = window.localStorage.getItem(key); if (raw) break; }
+        let legacyWeekOne = null;
+        try { legacyWeekOne = JSON.parse(window.localStorage.getItem('dossier-19.05.week1.v1') || 'null'); } catch (_) { legacyWeekOne = null; }
+        const saved = JSON.parse(raw || 'null');
+        if (!saved || ![1, 2, 3].includes(saved.version)) {
+          const fresh = emptyProgress();
+          fresh.week1 = normalizeWeekOne(legacyWeekOne);
+          return fresh;
+        }
+        const restored = {
+          version: 3,
+          discovered: saved.discovered === true,
+          solved: Array.isArray(saved.solved) ? [...new Set(saved.solved.filter(value => typeof value === 'string'))] : [],
+          fragments: Array.isArray(saved.fragments) ? [...new Set(saved.fragments.filter(value => typeof value === 'string'))] : [],
+          documentFound: saved.documentFound === true,
+          revealed: Array.isArray(saved.revealed) ? [...new Set(saved.revealed.filter(value => typeof value === 'string'))] : [],
+          week1: normalizeWeekOne(saved.week1 || legacyWeekOne),
+          journal: Array.isArray(saved.journal) ? saved.journal.filter(entry => entry && typeof entry.id === 'string' && typeof entry.title === 'string' && typeof entry.detail === 'string').map(entry => ({ id: entry.id, title: entry.title, detail: entry.detail, timestamp: typeof entry.timestamp === 'string' ? entry.timestamp : null })) : []
+        };
+        // L'ancienne version stockait les réussites, mais pas leur date : on migre les actions connues sans inventer d'horodatage.
+        if (saved.version === 1 && restored.journal.length === 0) {
+          if (restored.discovered) restored.journal.push({ id: 'symbol-001-found', title: 'Premier symbole découvert', detail: 'Le signe botanique a révélé le premier dossier.', timestamp: null });
+          if (restored.solved.includes('001')) restored.journal.push({ id: 'riddle-001-solved', title: 'Première énigme résolue', detail: 'Une observation a permis d’ouvrir le dossier 001.', timestamp: null });
+          if (restored.fragments.includes('001')) restored.journal.push({ id: 'fragment-01-found', title: 'Fragment 01/07 récupéré', detail: 'Le premier fragment a rejoint les archives.', timestamp: null });
+        }
+        return restored;
+      } catch (_) {
+        return emptyProgress();
+      }
+    }
+    let progress = readProgress();
+    window.Dossier19Progress = progress;
+    function saveProgress() {
+      try {
+        window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+      } catch (_) {
+        // Le site reste utilisable si le navigateur a désactivé le stockage local.
+      }
+    }
+    window.persistDossier19Progress = saveProgress;
+    saveProgress();
+
+    const countdownNodes = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds'),
+      finished: document.getElementById('finished-message')
+    };
+    let hasExpired = false;
+
+    function updateCountdown() {
+      const remaining = Math.max(0, target - Date.now());
+      const totalSeconds = Math.floor(remaining / 1000);
+      countdownNodes.days.textContent = String(Math.floor(totalSeconds / 86400)).padStart(2, '0');
+      countdownNodes.hours.textContent = String(Math.floor(totalSeconds / 3600) % 24).padStart(2, '0');
+      countdownNodes.minutes.textContent = String(Math.floor(totalSeconds / 60) % 60).padStart(2, '0');
+      countdownNodes.seconds.textContent = String(totalSeconds % 60).padStart(2, '0');
+      if (remaining === 0 && !hasExpired) {
+        hasExpired = true;
+        countdownNodes.finished.hidden = false;
+      }
+    }
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+
+    const botanicalTrigger = document.getElementById('botanical-trigger');
+    const caseDialog = document.getElementById('case-dialog');
+    const closeDialog = document.getElementById('close-dialog');
+    const riddleStage = document.getElementById('riddle-stage');
+    const riddleForm = document.getElementById('riddle-form');
+    const riddleHeading = document.getElementById('riddle-heading');
+    const riddleQuestion = document.getElementById('riddle-question');
+    const answerOptions = document.getElementById('answer-options');
+    const riddleFeedback = document.getElementById('riddle-feedback');
+    const verifyAnswer = document.getElementById('verify-answer');
+    const fragmentCard = document.getElementById('fragment-card');
+    const fragmentLabel = document.getElementById('fragment-label');
+    const fragmentCopy = document.getElementById('fragment-copy');
+    const fragmentRemaining = document.getElementById('fragment-remaining');
+    const archiveFragmentList = document.getElementById('archive-fragment-list');
+    const fragmentEmpty = document.getElementById('fragment-empty');
+    const archiveAnnex = document.getElementById('archive-annex');
+    const investigationLog = document.getElementById('investigation-log');
+    const journalEmpty = document.getElementById('journal-empty');
+    const progressLabel = document.getElementById('progress-label');
+    const progressCount = document.getElementById('progress-count');
+    const fragmentProgress = document.getElementById('fragment-progress');
+    let activeDossier = null;
+    let answerLocked = false;
+
+    function clearChildren(element) {
+      while (element.lastElementChild) element.removeChild(element.lastElementChild);
+    }
+    function renderArchives() {
+      clearChildren(archiveFragmentList);
+      const fragments = progress.fragments.map(id => DOSSIERS.find(dossier => dossier.id === id)).filter(Boolean);
+      fragments.forEach(dossier => {
+        const item = document.createElement('li');
+        item.className = 'archive-fragment';
+        const title = document.createElement('p');
+        title.className = 'archive-fragment-title';
+        title.textContent = dossier.fragment.label;
+        const text = document.createElement('blockquote');
+        text.textContent = `« ${dossier.fragment.text} »`;
+        item.append(title, text);
+        archiveFragmentList.append(item);
+      });
+      fragmentEmpty.hidden = fragments.length > 0;
+      archiveAnnex.hidden = !progress.documentFound;
+      const count = fragments.length;
+      progressLabel.textContent = `${count} fragment${count === 1 ? '' : 's'} découvert${count === 1 ? '' : 's'} sur 7`;
+      progressCount.textContent = `${String(count).padStart(2, '0')} / 07`;
+      fragmentProgress.value = count;
+      fragmentProgress.setAttribute('aria-valuetext', `${count} fragment${count === 1 ? '' : 's'} découvert${count === 1 ? '' : 's'} sur 7`);
+
+      clearChildren(investigationLog);
+      progress.journal.forEach(entry => {
+        const item = document.createElement('li');
+        item.className = 'log-entry';
+        const title = document.createElement('p');
+        title.className = 'log-title';
+        title.textContent = entry.title;
+        const detail = document.createElement('p');
+        detail.className = 'log-detail';
+        detail.textContent = entry.detail;
+        item.append(title, detail);
+        if (entry.timestamp) {
+          const date = new Date(entry.timestamp);
+          if (!Number.isNaN(date.getTime())) {
+            const time = document.createElement('time');
+            time.className = 'log-date';
+            time.dateTime = entry.timestamp;
+            time.textContent = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'medium', timeStyle: 'short' }).format(date);
+            item.append(time);
+          }
+        } else {
+          const date = document.createElement('span');
+          date.className = 'log-date';
+          date.textContent = 'Date non conservée';
+          item.append(date);
+        }
+        investigationLog.append(item);
+      });
+      journalEmpty.hidden = progress.journal.length > 0;
+    }
+    function recordEvent(id, title, detail) {
+      if (progress.journal.some(entry => entry.id === id)) return false;
+      progress.journal.push({ id, title, detail, timestamp: new Date().toISOString() });
+      saveProgress();
+      renderArchives();
+      return true;
+    }
+
+    function renderDossier(dossier) {
+      activeDossier = dossier;
+      riddleHeading.textContent = dossier.title;
+      riddleQuestion.textContent = `« ${dossier.question} »`;
+      riddleFeedback.textContent = '';
+      verifyAnswer.disabled = false;
+      answerLocked = false;
+      while (answerOptions.lastElementChild) answerOptions.removeChild(answerOptions.lastElementChild);
+      dossier.choices.forEach(choice => {
+        const label = document.createElement('label');
+        label.className = 'choice';
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'case-answer';
+        input.value = choice.id;
+        const key = document.createElement('span');
+        key.className = 'choice-key';
+        key.textContent = choice.id;
+        const text = document.createElement('span');
+        text.className = 'choice-text';
+        text.textContent = choice.text;
+        label.append(input, key, text);
+        answerOptions.append(label);
+      });
+      riddleStage.hidden = false;
+      fragmentCard.hidden = true;
+    }
+
+    function showFragment(dossier, animate) {
+      activeDossier = null;
+      riddleStage.hidden = true;
+      fragmentLabel.textContent = dossier.fragment.label;
+      fragmentCopy.textContent = `« ${dossier.fragment.text} »`;
+      const remaining = Math.max(0, 7 - progress.fragments.length);
+      fragmentRemaining.textContent = remaining === 1
+        ? '1 autre fragment reste à découvrir.'
+        : `${remaining} autres fragments restent à découvrir.`;
+      fragmentCard.hidden = false;
+      fragmentCard.classList.remove('is-revealed');
+      if (animate) window.requestAnimationFrame(() => fragmentCard.classList.add('is-revealed'));
+      else fragmentCard.classList.add('is-revealed');
+    }
+
+    renderArchives();
+
+    function renderDialogStage() {
+      const nextDossier = DOSSIERS.find(dossier => !progress.solved.includes(dossier.id));
+      if (nextDossier) {
+        renderDossier(nextDossier);
+        return;
+      }
+      const latestFragment = [...DOSSIERS].reverse().find(dossier => progress.fragments.includes(dossier.id));
+      if (latestFragment) showFragment(latestFragment, false);
+      else renderDossier(DOSSIERS[0]);
+    }
+
+    botanicalTrigger.setAttribute('aria-pressed', String(progress.discovered));
+    botanicalTrigger.addEventListener('click', () => {
+      if (!progress.discovered) {
+        progress.discovered = true;
+        recordEvent('symbol-001-found', 'Premier symbole découvert', 'Le signe botanique a révélé le premier dossier.');
+      }
+      botanicalTrigger.setAttribute('aria-pressed', 'true');
+      renderDialogStage();
+      if (!caseDialog.open) caseDialog.showModal();
     });
-    // Filet lumineux animé, superposé au flux de sable de la photo.
+    closeDialog.addEventListener('click', () => caseDialog.close());
+    caseDialog.addEventListener('click', event => {
+      if (event.target === caseDialog) caseDialog.close();
+    });
+
+    const secretDocumentTrigger = document.getElementById('secret-document-trigger');
+    const secretDocumentDialog = document.getElementById('secret-document-dialog');
+    const closeDocumentDialog = document.getElementById('close-document-dialog');
+    const documentNote = document.getElementById('document-note');
+    const SECRET_REDACTIONS = { dates: 'dates', conclusion: 'changer une histoire' };
+    const redactionButtons = [...document.querySelectorAll('.redaction[data-redaction]')];
+    function restoreRedactions() {
+      let revealedCount = 0;
+      redactionButtons.forEach(button => {
+        const id = button.getAttribute('data-redaction');
+        if (!progress.revealed.includes(id)) return;
+        button.textContent = SECRET_REDACTIONS[id];
+        button.classList.add('is-revealed');
+        button.setAttribute('aria-expanded', 'true');
+        button.disabled = true;
+        revealedCount++;
+      });
+      documentNote.textContent = revealedCount === 0
+        ? 'Une partie du document demeure classée.'
+        : revealedCount === redactionButtons.length
+          ? 'Les passages ont été révélés et consignés dans cette copie.'
+          : 'Un passage a été révélé et consigné dans cette copie.';
+    }
+    restoreRedactions();
+    secretDocumentTrigger.setAttribute('aria-pressed', String(progress.documentFound));
+    secretDocumentTrigger.addEventListener('click', () => {
+      if (!progress.documentFound) {
+        progress.documentFound = true;
+        recordEvent('document-secret-found', 'Document secret découvert', 'Une pièce confidentielle a été consultée.');
+      }
+      secretDocumentTrigger.setAttribute('aria-pressed', 'true');
+      restoreRedactions();
+      if (!secretDocumentDialog.open) secretDocumentDialog.showModal();
+    });
+    closeDocumentDialog.addEventListener('click', () => secretDocumentDialog.close());
+    secretDocumentDialog.addEventListener('click', event => {
+      if (event.target === secretDocumentDialog) secretDocumentDialog.close();
+    });
+    redactionButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-redaction');
+        if (!Object.prototype.hasOwnProperty.call(SECRET_REDACTIONS, id) || progress.revealed.includes(id)) return;
+        progress.revealed.push(id);
+        button.textContent = SECRET_REDACTIONS[id];
+        button.classList.add('is-revealed');
+        button.setAttribute('aria-expanded', 'true');
+        button.disabled = true;
+        saveProgress();
+        restoreRedactions();
+      });
+    });
+
+    riddleForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!activeDossier || answerLocked || progress.solved.includes(activeDossier.id)) return;
+      const selected = riddleForm.querySelector('input[name="case-answer"]:checked');
+      if (!selected) {
+        riddleFeedback.textContent = 'Une observation est nécessaire pour poursuivre.';
+        return;
+      }
+      if (selected.value !== activeDossier.answer) {
+        riddleFeedback.textContent = activeDossier.incorrectMessage;
+        return;
+      }
+
+      answerLocked = true;
+      verifyAnswer.disabled = true;
+      const solvedDossier = activeDossier;
+      if (!progress.solved.includes(solvedDossier.id)) {
+        progress.solved.push(solvedDossier.id);
+        recordEvent('riddle-' + solvedDossier.id + '-solved', 'Première énigme résolue', 'Une observation a permis d’ouvrir le dossier 001.');
+      }
+      if (!progress.fragments.includes(solvedDossier.id)) {
+        progress.fragments.push(solvedDossier.id);
+        recordEvent('fragment-' + solvedDossier.id + '-found', 'Fragment 01/07 récupéré', 'Le premier fragment a rejoint les archives.');
+      }
+      saveProgress();
+      renderArchives();
+      showFragment(solvedDossier, true);
+    });
+
+    // Animation discrète du sable, synchronisée avec la période de 40 jours du compte à rebours.
     const flowCanvas = document.getElementById('sand-flow');
     const flowCtx = flowCanvas.getContext('2d');
     const hourglassImage = document.getElementById('hourglass-image');
+    const COUNTDOWN_DURATION = 40 * 24 * 60 * 60 * 1000;
     let flowWidth = 0, flowHeight = 0, flowDpr = 1;
     function sizeFlow() {
       const rect = flowCanvas.getBoundingClientRect();
-      flowWidth = rect.width; flowHeight = rect.height;
+      flowWidth = rect.width;
+      flowHeight = rect.height;
       flowDpr = Math.min(window.devicePixelRatio || 1, 2);
       flowCanvas.width = Math.round(flowWidth * flowDpr);
       flowCanvas.height = Math.round(flowHeight * flowDpr);
@@ -172,8 +1002,6 @@
       const topBase = imageTop + imageHeight * .169;
       const topDepth = imageHeight * .067;
       const remaining = 1 - progress;
-
-      // Efface progressivement la partie supérieure de la pile photographiée.
       if (progress > .002) {
         flowCtx.beginPath();
         for (let i = 0; i <= 72; i++) {
@@ -186,11 +1014,9 @@
           flowCtx.lineTo(x, drawPileSurface(x, topCenter, topHalf, topBase, topDepth, remaining));
         }
         flowCtx.closePath();
-        flowCtx.fillStyle = '#030303';
+        flowCtx.fillStyle = '#030504';
         flowCtx.fill();
       }
-
-      // Dépose des grains stables dans la zone gagnée par la pile inférieure.
       if (progress > .003) {
         const lowerCenter = imageLeft + imageWidth * .715;
         const lowerHalf = imageWidth * .355;
@@ -206,14 +1032,12 @@
         }
         for (let i = 72; i >= 0; i--) {
           const x = lowerCenter - lowerHalf + lowerHalf * 2 * i / 72;
-          const y = drawPileSurface(x, lowerCenter, lowerHalf, lowerBase, oldDepth, 1);
-          flowCtx.lineTo(x, y);
+          flowCtx.lineTo(x, drawPileSurface(x, lowerCenter, lowerHalf, lowerBase, oldDepth, 1));
         }
         flowCtx.closePath();
-        flowCtx.fillStyle = `rgba(175,175,175,${.09 * progress})`;
+        flowCtx.fillStyle = `rgba(175, 184, 170, ${.1 * progress})`;
         flowCtx.fill();
-
-        for (let i = 0; i < 2600; i++) {
+        for (let i = 0; i < 1200; i++) {
           const seed = i + 41;
           const u = fraction(Math.sin(seed * 127.1) * 43758.5453);
           const v = fraction(Math.sin(seed * 269.5) * 24634.6345);
@@ -225,7 +1049,7 @@
           const flicker = .38 + fraction(Math.sin(seed * 17.17) * 8371.31) * .52;
           const grain = fraction(Math.sin(seed * 33.31) * 12817.2);
           flowCtx.globalAlpha = flicker * progress;
-          flowCtx.fillStyle = grain > .88 ? '#777' : grain > .55 ? '#aaa' : '#e1e1e1';
+          flowCtx.fillStyle = grain > .88 ? '#777f75' : grain > .55 ? '#aeb5aa' : '#e1e2d9';
           const size = .45 + grain * 1.15;
           flowCtx.fillRect(x, y, size, size);
         }
@@ -235,20 +1059,19 @@
     function animateFlow(now) {
       flowCtx.clearRect(0, 0, flowWidth, flowHeight);
       if (hourglassImage.complete && hourglassImage.naturalWidth && flowWidth && flowHeight) {
-        const ratio = Math.min(flowWidth / hourglassImage.naturalWidth, flowHeight / hourglassImage.naturalHeight);
+        const ratio = Math.max(flowWidth / hourglassImage.naturalWidth, flowHeight / hourglassImage.naturalHeight);
         const imageWidth = hourglassImage.naturalWidth * ratio;
         const imageHeight = hourglassImage.naturalHeight * ratio;
         const imageLeft = (flowWidth - imageWidth) / 2;
-        const positionY = parseFloat(getComputedStyle(hourglassImage).objectPosition.split(' ')[1]) / 100 || .5;
-        const imageTop = (flowHeight - imageHeight) * positionY;
-        const progress = Math.min(1, Math.max(0, 1 - (target - Date.now()) / (40 * 86400000)));
+        const imageTop = (flowHeight - imageHeight) / 2;
+        const progress = Math.min(1, Math.max(0, 1 - (target - Date.now()) / COUNTDOWN_DURATION));
         drawChangingSand(imageLeft, imageTop, imageWidth, imageHeight, progress);
         const streamX = imageLeft + imageWidth * .728;
         const streamTop = imageTop + imageHeight * .335;
         const streamLength = imageHeight * .435;
-        for (let i = 0; i < 82; i++) {
+        for (let i = 0; i < 66; i++) {
           const seed = i * 127.1 + 311.7;
-          const phase = ((Math.sin(seed) * 43758.5453) % 1 + 1) % 1;
+          const phase = fraction(Math.sin(seed) * 43758.5453);
           const speed = 70 + ((Math.sin(seed * 1.7) + 1) * .5) * 72;
           const y = streamTop + ((now / 1000 * speed + phase * streamLength) % streamLength);
           const sway = Math.sin(now * .002 + seed) * imageWidth * .004;
@@ -256,20 +1079,383 @@
           const flicker = .28 + ((Math.sin(now * .008 + seed) + 1) * .5) * .56;
           const length = 2 + ((Math.sin(seed * 4.2) + 1) * .5) * 5;
           flowCtx.globalAlpha = flicker * (.25 + .75 * (1 - progress));
-          flowCtx.fillStyle = '#f3f1ed';
-          flowCtx.shadowColor = '#fff';
-          flowCtx.shadowBlur = 4;
+          flowCtx.fillStyle = '#e7e8df';
+          flowCtx.shadowColor = '#e7e8df';
+          flowCtx.shadowBlur = 3;
           flowCtx.fillRect(streamX + spread + sway, y, .9 + phase * .8, length);
         }
         flowCtx.globalAlpha = 1;
         flowCtx.shadowBlur = 0;
       }
-      requestAnimationFrame(animateFlow);
+      window.requestAnimationFrame(animateFlow);
     }
     sizeFlow();
-    window.addEventListener('resize', sizeFlow);
-    hourglassImage.addEventListener('load', sizeFlow);
-    requestAnimationFrame(animateFlow);
+    window.addEventListener('resize', sizeFlow, { passive: true });
+    hourglassImage.addEventListener('load', sizeFlow, { once: true });
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.requestAnimationFrame(animateFlow);
+    }
+  </script>
+  <script>
+    (() => {
+      // Les sources et les relations sont des données éditoriales; la progression partage le stockage v3 existant.
+      const CASE_FILES = [
+        { id: 'club', ref: 'Pièce 001—A · février', title: 'Le lieu de la rencontre', paragraphs: ['Nous nous sommes rencontrés au mois de février dans l’ancien club de jiu-jitsu brésilien. L’adresse de l’époque se trouvait à l’Institut Saint-Jean-Baptiste.', 'Aucun jour exact n’est consigné. Une date précise serait une fausse précision.'], source: 'Souvenir communiqué · mois connu, jour inconnu' },
+        { id: 'ride', ref: 'Pièce 001—B · premier pas', title: 'La demande de trajet', paragraphs: ['Le premier pas a été une demande de covoiturage : elle habitait près de chez moi. Je suis monté dans sa voiture pour qu’elle me redépose.', 'Le point de montée est le parking où la voiture était garée. L’adresse exacte de ce parking n’a pas été fournie.'], source: 'Souvenir communiqué · rôle du lieu connu, adresse absente' },
+        { id: 'gym', ref: 'Pièce 001—C · ensuite', title: 'Les conversations', paragraphs: ['Ensuite, nous passions beaucoup de temps à discuter près d’un gymnase situé autrefois devant chez moi, à Court-Saint-Étienne.', 'Le dossier décrit un lieu de conversations, distinct du point où je suis monté dans la voiture.'], source: 'Souvenir communiqué · fonction du lieu' },
+        { id: 'ottignies', ref: 'Pièce 001—D · une autre soirée', title: 'Le détour d’Ottignies', paragraphs: ['Un autre souvenir important : nous sommes allés charger ma voiture à Ottignies. Je lui ai lu les textes que j’écrivais et je lui ai montré une vidéo de baleines.', 'Aucun ordre plus précis entre cette soirée et les autres souvenirs n’est consigné ici.'], source: 'Souvenir communiqué · séquence non datée' }
+      ];
+      const RECORDS = [
+        ...CASE_FILES.map(({ id, title }) => ({ id, title })),
+        { id: 'anomaly', title: 'L’anomalie d’index' },
+        { id: 'type', title: 'Le marquage de classement' },
+        { id: 'redaction', title: 'La démonstration' },
+        { id: 'private', title: 'Deux notes de marge' },
+        { id: 'botanical', title: 'Le témoin végétal' }
+      ];
+      const FRAGMENTS = [
+        { id: 'W1-E01', title: 'Éclat · Le relevé', text: 'Une fiche exacte sait aussi préserver ce qui n’a pas été retenu.', origin: 'Contrôle de transcription', condition: 'Repérer la discipline altérée dans l’exercice d’index.' },
+        { id: 'W1-E02', title: 'Éclat · Le premier geste', text: 'Le premier pas n’est pas toujours le premier lieu.', origin: 'Clé typographique et pièce 001—B', condition: 'Résoudre la clé typographique de classement.' },
+        { id: 'W1-E03', title: 'Éclat · La démonstration', text: 'Une demande et une démonstration peuvent tenir dans le même souvenir, sans devenir la même chose.', origin: 'Archive censurée · Esplanade', condition: 'Révéler le mot masqué et classer correctement la démonstration.' },
+        { id: 'W1-E04', title: 'Éclat · Double note', text: 'Une plaisanterie garde sa précision lorsqu’on se souvient de ce qu’elle désigne.', origin: 'Notes privées', condition: 'Associer correctement les deux références personnelles.' },
+        { id: 'W1-E05', title: 'Éclat · En marge', text: 'La marge ne donne pas une adresse; elle confirme seulement qu’une observation a été faite.', origin: 'Symbole botanique', condition: 'Examiner le signe végétal dissimulé au registre.' },
+        { id: 'W1-E06', title: 'Éclat · Point de départ', text: 'Le lieu retenu est celui du départ en voiture, distinct du club, du gymnase et d’Ottignies.', origin: 'Déduction principale', condition: 'Résoudre la déduction du premier lieu.' },
+        { id: 'W1-E07', title: 'Éclat · Réserve', text: 'Une archive sérieuse indique aussi la limite de ce qu’elle peut établir.', origin: 'Protocole de source', condition: 'Classer correctement les faits établis, déduits et absents.' }
+      ];
+      const state = window.Dossier19Progress.week1;
+      const byId = id => document.querySelector(`[data-record="${id}"]`);
+      const SOURCE_AUDIT = [
+        { id: 'meeting-month', text: 'La rencontre au club est située au mois de février.', answer: 'attested' },
+        { id: 'meeting-day', text: 'Le jour exact de la rencontre est consigné.', answer: 'absent' },
+        { id: 'club-address', text: 'L’adresse de l’ancien club était l’Institut Saint-Jean-Baptiste.', answer: 'attested' },
+        { id: 'pickup-role', text: 'La voiture attendait sur un parking au moment du premier covoiturage.', answer: 'attested' },
+        { id: 'pickup-address', text: 'Le nom de rue ou l’adresse du parking apparaît dans les souvenirs fournis.', answer: 'absent' },
+        { id: 'ottignies-order', text: 'La soirée à Ottignies est datée après les conversations du gymnase.', answer: 'absent' },
+        { id: 'field-distinction', text: 'Le point de départ du trajet et le lieu de la rencontre sont deux rôles distincts.', answer: 'inferred' }
+      ];
+      const journal = document.getElementById('week-journal');
+      const collection = document.getElementById('week-collection');
+      const boardSelect = document.getElementById('board-select');
+      const connectionList = document.getElementById('connection-log');
+      const recordsProgress = document.getElementById('records-progress');
+      const collectionProgress = document.getElementById('collection-progress');
+      const fieldForm = document.getElementById('field-form');
+      const fieldFeedback = document.getElementById('field-feedback');
+      const fieldReward = document.getElementById('field-reward');
+      const fieldPrerequisite = document.getElementById('field-prerequisite');
+      const hintCopy = document.getElementById('field-hint-copy');
+      const deepFile = document.getElementById('deep-file');
+      const deepReward = document.getElementById('deep-reward');
+      function save() {
+        window.persistDossier19Progress();
+      }
+      function addJournal(id, title, detail) {
+        if (state.journal.some(item => item.id === id)) return;
+        state.journal.unshift({ id, title, detail, timestamp: new Date().toISOString() });
+        save(); renderJournal();
+      }
+      function award(id) {
+        if (!FRAGMENTS.some(item => item.id === id) || state.fragments.includes(id)) return false;
+        state.fragments.push(id); save(); renderCollection();
+        return true;
+      }
+      function annotate(recordId, message) {
+        const target = byId(recordId)?.querySelector('[data-annotation]');
+        if (!target) return;
+        target.textContent = `Annotation ajoutée : ${message}`;
+        target.hidden = false;
+      }
+      function renderCaseFiles() {
+        const grid = document.getElementById('week-record-grid');
+        grid.replaceChildren();
+        CASE_FILES.forEach(file => {
+          const details = document.createElement('details'); details.className = 'record-card'; details.dataset.record = file.id;
+          const summary = document.createElement('summary'); const title = document.createElement('span');
+          const ref = document.createElement('span'); ref.className = 'record-id'; ref.textContent = file.ref;
+          title.append(ref, document.createTextNode(file.title)); summary.append(title);
+          const body = document.createElement('div'); body.className = 'record-body';
+          file.paragraphs.forEach(copy => { const p = document.createElement('p'); p.textContent = copy; body.append(p); });
+          const source = document.createElement('span'); source.className = 'record-source'; source.textContent = `Source : ${file.source}`;
+          const annotation = document.createElement('p'); annotation.className = 'record-annotation'; annotation.dataset.annotation = file.id; annotation.hidden = true;
+          body.append(source, annotation); details.append(summary, body); grid.append(details);
+        });
+      }
+      renderCaseFiles();
+      RECORDS.push({ id: 'source-audit', title: 'Protocole de source' });
+      function renderSourceAudit() {
+        const list = document.getElementById('source-audit-list');
+        list.replaceChildren();
+        SOURCE_AUDIT.forEach(row => {
+          const li = document.createElement('li'); li.className = 'audit-row';
+          const label = document.createElement('label'); label.className = 'audit-statement'; label.htmlFor = `audit-${row.id}`; label.textContent = row.text;
+          const select = document.createElement('select'); select.className = 'audit-select'; select.id = `audit-${row.id}`; select.name = row.id;
+          [['', 'Choisir une qualification'], ['attested', 'Attesté par une source'], ['inferred', 'Déduit des sources'], ['absent', 'Absent du dossier']].forEach(([value, text]) => { const option = document.createElement('option'); option.value = value; option.textContent = text; select.append(option); });
+          select.value = state.auditAnswers[row.id] || '';
+          select.disabled = state.auditSolved;
+          li.append(label, select); list.append(li);
+          select.addEventListener('change', () => { state.auditAnswers[row.id] = select.value; save(); });
+        });
+      }
+      renderSourceAudit();
+      function renderJournal() {
+        journal.replaceChildren();
+        if (!state.journal.length) { journal.innerHTML = '<li class="archive-empty">Aucune nouvelle annotation.</li>'; return; }
+        state.journal.forEach(item => {
+          const li = document.createElement('li'); li.className = 'log-entry';
+          const title = document.createElement('p'); title.className = 'log-title'; title.textContent = item.title;
+          const detail = document.createElement('p'); detail.className = 'log-detail'; detail.textContent = item.detail;
+          li.append(title, detail);
+          if (item.timestamp) { const time = document.createElement('time'); time.className = 'log-date'; time.dateTime = item.timestamp; const date = new Date(item.timestamp); time.textContent = Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat('fr-BE', { dateStyle: 'medium', timeStyle: 'short' }).format(date); li.append(time); }
+          journal.append(li);
+        });
+      }
+      function renderCollection() {
+        collection.replaceChildren();
+        FRAGMENTS.forEach(item => {
+          const found = state.fragments.includes(item.id);
+          const card = document.createElement('article'); card.className = `collectible${found ? ' is-found' : ''}`;
+          const id = document.createElement('span'); id.className = 'collectible-id'; id.textContent = found ? item.id : 'Éclat non identifié';
+          const title = document.createElement('h4'); title.textContent = found ? item.title : 'Élément inconnu';
+          const copy = document.createElement('p'); copy.textContent = found ? `${item.text} Origine : ${item.origin}.` : 'Condition de découverte conservée dans le dossier.';
+          card.append(id, title, copy); collection.append(card);
+        });
+        collectionProgress.textContent = `${state.fragments.length} / ${FRAGMENTS.length} éclats retrouvés`;
+      }
+      function renderBoard() {
+        boardSelect.replaceChildren();
+        RECORDS.filter(item => state.records.includes(item.id)).forEach(item => {
+          const label = document.createElement('label'); label.className = 'board-choice';
+          const input = document.createElement('input'); input.type = 'checkbox'; input.name = 'board-record'; input.value = item.id;
+          const text = document.createElement('span'); text.textContent = item.title;
+          label.append(input, text); boardSelect.append(label);
+        });
+        if (!boardSelect.children.length) { const p = document.createElement('p'); p.className = 'archive-empty'; p.textContent = 'Examine une pièce pour pouvoir la comparer.'; boardSelect.append(p); }
+      }
+      function renderConnections() {
+        connectionList.replaceChildren();
+        if (!state.connections.length) { const li = document.createElement('li'); li.textContent = 'Aucune connexion consignée.'; connectionList.append(li); return; }
+        state.connections.forEach(id => {
+          const found = CONNECTIONS[id]; if (!found) return;
+          const li = document.createElement('li'); li.textContent = found.label; connectionList.append(li);
+        });
+      }
+      const CONNECTIONS = {
+        'club|ride': { label: 'Club + trajet : le lieu de rencontre et le point de départ du covoiturage sont deux étapes distinctes.', annotate: ['club', 'Le club situe la rencontre; il ne fournit pas l’adresse du parking.'], award: null },
+        'gym|ride': { label: 'Gymnase + trajet : les conversations près de la maison ont lieu après la rencontre et ne sont pas le point de montée.', annotate: ['gym', 'La pièce 001—C décrit des conversations ultérieures; ce n’est pas le départ du premier trajet.'], award: null },
+        'ottignies|ride': { label: 'Ottignies + trajet : la soirée de chargement et le premier covoiturage sont deux souvenirs distincts.', annotate: ['ottignies', 'Cette soirée distincte ne désigne pas le parking du premier trajet.'], award: null },
+        'ride|type': { label: 'Premier geste + covoiturage : la clé typographique confirme l’ordre consigné dans la pièce 001—B.', annotate: ['ride', 'La clé de classement renvoie à la demande de covoiturage, premier geste de l’enquête.'], award: 'W1-E02' },
+        'anomaly|club': { label: 'Index + club : « judo » contredit la discipline réellement consignée, le jiu-jitsu brésilien.', annotate: ['club', 'La correction du registre confirme le jiu-jitsu brésilien; le jour exact reste inconnu.'], award: null }
+      };
+      const REQUIRED_FIELD_CONNECTIONS = ['club|ride', 'gym|ride', 'ottignies|ride'];
+      function renderFieldPrerequisite() {
+        const count = REQUIRED_FIELD_CONNECTIONS.filter(key => state.connections.includes(key)).length;
+        fieldPrerequisite.textContent = state.fieldSolved
+          ? 'Les quatre pièces, le protocole de source et les trois concordances ont été examinés; la déduction est archivée.'
+          : `Avant de conclure, valide le protocole de source puis établis au tableau les trois concordances entre le club, le trajet, le gymnase et la soirée d’Ottignies. Concordances : ${count} / 3.`;
+      }
+      function render() {
+        recordsProgress.textContent = `${state.records.filter(id => ['club','ride','gym','ottignies'].includes(id)).length} / 4 pièces examinées`;
+        document.querySelectorAll('details[data-record]').forEach(details => {
+          const id = details.dataset.record;
+          details.open = false;
+          if (state.records.includes(id)) details.dataset.examined = 'true';
+        });
+        if (state.fieldSolved) {
+          fieldReward.hidden = false;
+          fieldReward.textContent = 'Déduction consignée : le premier lieu physique est le parking où la voiture était garée avant le premier covoiturage. Le souvenir fourni ne précise pas d’adresse exacte.';
+          document.getElementById('field-answer').value = 'Le parking du premier covoiturage';
+          document.getElementById('field-answer').disabled = true;
+          document.getElementById('field-submit').disabled = true;
+          document.getElementById('field-feedback').textContent = 'Déduction vérifiée et enregistrée.';
+          annotate('ride', 'Le premier lieu de terrain est le parking où la voiture attendait; aucune adresse plus précise n’est connue.');
+        }
+        if (state.auditSolved) {
+          document.getElementById('audit-feedback').textContent = 'Le protocole de source est validé. Les lacunes restent des lacunes.';
+          document.querySelector('#source-audit-form button[type="submit"]').disabled = true;
+        }
+        renderFieldPrerequisite();
+        for (const row of state.journal) {
+          if (row.id === 'mini-anomaly') annotate('club', 'Le registre mentionne le jiu-jitsu brésilien; la ligne « judo » était une anomalie de l’exercice.');
+          if (row.id === 'mini-type') annotate('ride', 'Le repère typographique « premier pas » désigne la demande de covoiturage.');
+          if (row.id === 'mini-redaction') annotate('ottignies', 'Une autre pièce rappelle qu’un geste observé ne doit pas être confondu avec le souvenir qu’il accompagne.');
+          if (row.id === 'deep-solved') annotate('club', 'Marge du dossier fantôme : un début peut se situer ailleurs que le lieu de la rencontre.');
+        }
+        renderJournal(); renderCollection(); renderBoard(); renderConnections(); updateDeepFile();
+      }
+      document.querySelectorAll('details[data-record]').forEach(details => details.addEventListener('toggle', () => {
+        if (!details.open) return;
+        const id = details.dataset.record;
+        if (!state.records.includes(id)) { state.records.push(id); save(); addJournal(`record-${id}`, 'Pièce examinée', RECORDS.find(item => item.id === id)?.title || id); }
+        recordsProgress.textContent = `${state.records.filter(item => ['club','ride','gym','ottignies'].includes(item)).length} / 4 pièces examinées`;
+        renderBoard();
+      }));
+
+      const HINTS = [
+        'Indice 1/3 · Le lieu de la rencontre n’est pas automatiquement le lieu du premier déplacement.',
+        'Indice 2/3 · La pièce 001—B décrit le moment où tu montes dans la voiture.',
+        'Indice 3/3 · Cherche l’endroit où la voiture était garée avant le départ; l’adresse exacte n’est pas connue.'
+      ];
+      document.getElementById('field-hint').addEventListener('click', () => {
+        state.hintLevel = Math.min(3, state.hintLevel + 1); save();
+        hintCopy.hidden = false; hintCopy.textContent = HINTS[state.hintLevel - 1];
+        if (state.hintLevel === 3) document.getElementById('field-hint').disabled = true;
+      });
+      if (state.hintLevel) { hintCopy.hidden = false; hintCopy.textContent = HINTS[state.hintLevel - 1]; }
+      if (state.hintLevel >= 3) document.getElementById('field-hint').disabled = true;
+      const AUDIT_HINTS = [
+        'Indice 1/3 · Une source peut confirmer le mois sans confirmer le jour.',
+        'Indice 2/3 · « Une autre soirée » n’indique pas son ordre exact par rapport aux autres souvenirs.',
+        'Indice 3/3 · Le rôle du parking peut être établi; son adresse reste absente.'
+      ];
+      document.getElementById('audit-hint').addEventListener('click', () => {
+        state.auditHintSeen = true; save();
+        const hint = document.getElementById('audit-hint-copy'); hint.hidden = false;
+        hint.textContent = AUDIT_HINTS[Math.min(2, Math.max(0, Object.keys(state.auditAnswers).length - 1))];
+      });
+      if (state.auditHintSeen) { const hint = document.getElementById('audit-hint-copy'); hint.hidden = false; hint.textContent = AUDIT_HINTS[Math.min(2, Math.max(0, Object.keys(state.auditAnswers).length - 1))]; }
+      document.getElementById('source-audit-form').addEventListener('submit', event => {
+        event.preventDefault(); if (state.auditSolved) return;
+        if (!['club','ride','gym','ottignies'].every(id => state.records.includes(id))) { document.getElementById('audit-feedback').textContent = 'Examine d’abord les quatre pièces de source.'; return; }
+        if (SOURCE_AUDIT.some(row => !state.auditAnswers[row.id])) { document.getElementById('audit-feedback').textContent = 'Certaines propositions attendent encore une qualification.'; return; }
+        if (!SOURCE_AUDIT.every(row => state.auditAnswers[row.id] === row.answer)) { document.getElementById('audit-feedback').textContent = 'Une qualification ne concorde pas avec les sources. Rien n’est verrouillé; relis les pièces et ajuste le relevé.'; return; }
+        state.auditSolved = true; state.solved.push('source-audit'); save(); award('W1-E07');
+        addJournal('source-audit-solved', 'Protocole de source validé', 'Le mois et les rôles sont établis; le jour, l’adresse et un ordre de souvenirs restent inconnus.');
+        annotate('club', 'Le dossier confirme février, mais ne conserve pas le jour exact.');
+        annotate('ride', 'Le rôle du point de montée est établi; son adresse exacte ne l’est pas.');
+        document.querySelectorAll('#source-audit-list select').forEach(select => select.disabled = true);
+        document.getElementById('audit-feedback').textContent = 'Le protocole de source est validé. Les lacunes restent des lacunes.';
+        renderFieldPrerequisite(); updateDeepFile();
+      });
+      fieldForm.addEventListener('submit', event => {
+        event.preventDefault(); if (state.fieldSolved) return;
+        const primaryRead = ['club','ride','gym','ottignies'].every(id => state.records.includes(id));
+        if (!primaryRead) { fieldFeedback.textContent = 'Examine d’abord les quatre pièces principales.'; return; }
+        if (!state.auditSolved) { fieldFeedback.textContent = 'Valide d’abord le protocole de source : sépare ce qui est attesté de ce qui manque.'; return; }
+        if (!REQUIRED_FIELD_CONNECTIONS.every(key => state.connections.includes(key))) { fieldFeedback.textContent = 'La lecture des pièces est complète, mais les trois concordances principales restent à établir au tableau.'; return; }
+        const answer = fieldForm.querySelector('#field-answer').value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/\s+/g, ' ');
+        if (!answer) { fieldFeedback.textContent = 'Rédige une conclusion avant de déposer le rapport.'; return; }
+        const accepted = ['parking', 'le parking', 'parking du covoiturage', 'le parking du covoiturage', 'parking du premier covoiturage', 'le parking du premier covoiturage', 'point de montee', 'le point de montee', 'parking ou la voiture etait garee'];
+        if (!accepted.includes(answer)) { fieldFeedback.textContent = 'Cette conclusion ne distingue pas encore la rencontre, les conversations et l’autre soirée du point de départ du trajet.'; return; }
+        state.fieldSolved = true; save(); award('W1-E06'); addJournal('field-solved', 'Point de départ déduit', 'Le parking du premier covoiturage est distingué des autres lieux du dossier.'); render();
+        fieldReward.classList.add('is-revealed');
+      });
+
+      const MINI_RULES = {
+        anomaly: { answer: 'discipline', reward: 'W1-E01', message: 'La ligne altérée est repérée : l’archive consigne un club de jiu-jitsu brésilien.', hints: ['Compare les champs de l’exercice à la pièce 001—A.', '« Judo » ne correspond pas au jiu-jitsu brésilien consigné.'] },
+        type: { answer: 'ride', reward: 'W1-E02', message: '« Premier pas » est bien la demande de covoiturage.', hints: ['L’italique désigne une action, pas un bâtiment.', 'Relie « premier pas » à la demande de trajet de la pièce 001—B.'] },
+        redaction: { answer: 'demo', reward: 'W1-E03', message: 'La demande de gel et la démonstration de texture sont deux actions distinctes.', hints: ['Révèle les deux segments avant de choisir une interprétation.', 'Compare qui demande quoi et ce que la vendeuse précise sur la démonstration.'] },
+        private: { answer: 'both', reward: 'W1-E04', message: 'Les deux notes correspondent aux références consignées.', hints: ['Les notes ne se contredisent pas; elles portent sur deux plaisanteries différentes.', 'Teste si une seule association ou les deux sont exactes.'] }
+      };
+      document.querySelectorAll('[data-hint]').forEach(button => button.addEventListener('click', () => {
+        const id = button.dataset.hint; const hints = MINI_RULES[id]?.hints || []; if (!hints.length) return;
+        state.hints[id] = Math.min(hints.length, (state.hints[id] || 0) + 1); save();
+        const copy = document.querySelector(`[data-hint-copy="${id}"]`); copy.hidden = false; copy.textContent = `${state.hints[id]}/${hints.length} · ${hints[state.hints[id] - 1]}`;
+        if (state.hints[id] >= hints.length) button.disabled = true;
+      }));
+      Object.entries(state.hints).forEach(([id, level]) => {
+        const hints = MINI_RULES[id]?.hints || []; const copy = document.querySelector(`[data-hint-copy="${id}"]`); const button = document.querySelector(`[data-hint="${id}"]`);
+        if (!copy || !button || !hints.length || !level) return;
+        copy.hidden = false; copy.textContent = `${level}/${hints.length} · ${hints[Math.min(level, hints.length) - 1]}`; if (level >= hints.length) button.disabled = true;
+      });
+      document.querySelectorAll('form[data-mini-form]').forEach(form => form.addEventListener('submit', event => {
+        event.preventDefault(); const id = form.dataset.miniForm; const rule = MINI_RULES[id]; const feedback = form.querySelector('.week-feedback');
+        if (state.solved.includes(id)) { feedback.textContent = 'Cette découverte est déjà consignée.'; return; }
+        if (id === 'anomaly' && !state.records.includes('club')) { feedback.textContent = 'Examine d’abord la pièce 001—A.'; return; }
+        if (id === 'type' && !state.records.includes('ride')) { feedback.textContent = 'Examine d’abord la pièce 001—B.'; return; }
+        if (id === 'redaction' && !['request','context'].every(key => state.redactions.includes(key))) { feedback.textContent = 'Révèle les deux passages, puis compare la demande au cadre de la démonstration.'; return; }
+        const selected = form.querySelector('input:checked');
+        if (!selected) { feedback.textContent = 'Une réponse est nécessaire pour classer la pièce.'; return; }
+        if (selected.value !== rule.answer) { feedback.textContent = 'Cette lecture ne concorde pas avec les pièces. Tu peux réessayer.'; return; }
+        state.solved.push(id); if (!state.records.includes(id)) state.records.push(id); save(); award(rule.reward); addJournal(`mini-${id}`, 'Piste facultative résolue', rule.message); feedback.textContent = rule.message;
+        form.querySelectorAll('input,button').forEach(input => { if (input.type !== 'submit' || input.tagName === 'BUTTON') input.disabled = true; });
+        if (id === 'anomaly') annotate('club', 'Le registre mentionne le jiu-jitsu brésilien; « judo » était l’anomalie de l’exercice.');
+        if (id === 'type') annotate('ride', 'Le marquage « premier pas » renvoie à la demande de covoiturage.');
+        renderBoard(); updateDeepFile();
+      }));
+      if (state.solved.includes('anomaly') || state.solved.includes('type') || state.solved.includes('redaction') || state.solved.includes('private')) {
+        document.querySelectorAll('form[data-mini-form]').forEach(form => { if (state.solved.includes(form.dataset.miniForm)) form.querySelectorAll('input,button').forEach(input => input.disabled = true); });
+      }
+      const REDACTIONS = { request: 'mettre du gel', context: 'seulement pour la démonstration' };
+      const redactionButtons = [...document.querySelectorAll('.redacted-line[data-redaction]')];
+      function restoreRedactions() {
+        redactionButtons.forEach(button => {
+          const id = button.dataset.redaction;
+          if (!state.redactions.includes(id)) return;
+          button.textContent = REDACTIONS[id]; button.setAttribute('aria-expanded', 'true'); button.disabled = true;
+        });
+      }
+      redactionButtons.forEach(button => button.addEventListener('click', () => {
+        const id = button.dataset.redaction;
+        if (!Object.prototype.hasOwnProperty.call(REDACTIONS, id) || state.redactions.includes(id)) return;
+        state.redactions.push(id); save(); restoreRedactions();
+        if (state.redactions.length === 1) addJournal('redaction-first', 'Premier passage révélé', 'La copie distingue une demande du cadre de la démonstration.');
+        if (['request','context'].every(key => state.redactions.includes(key))) addJournal('redaction-complete', 'Archive censurée reconstituée', 'Les deux segments peuvent désormais être interprétés ensemble.');
+      }));
+      restoreRedactions();
+      if (state.solved.includes('redaction')) document.querySelector('[data-mini-form="redaction"]').querySelectorAll('input,button').forEach(input => input.disabled = true);
+
+      const botanical = document.getElementById('week-botanical');
+      botanical.setAttribute('aria-pressed', String(state.solved.includes('botanical')));
+      if (state.solved.includes('botanical')) document.getElementById('botanical-feedback').textContent = 'Une note de marge a rejoint les éclats retrouvés.';
+      botanical.addEventListener('click', () => {
+        if (state.solved.includes('botanical')) return;
+        state.solved.push('botanical'); botanical.setAttribute('aria-pressed', 'true');
+        state.records.push('botanical');
+        document.getElementById('botanical-feedback').textContent = 'Le signe est examiné. Une note de marge rejoint la collection.';
+        award('W1-E05'); addJournal('mini-botanical', 'Signe botanique examiné', 'Un éclat discret a été consigné en marge du registre.'); updateDeepFile();
+      });
+
+      document.getElementById('connect-evidence').addEventListener('click', () => {
+        const selected = [...boardSelect.querySelectorAll('input:checked')].map(input => input.value).sort();
+        const feedback = document.getElementById('board-feedback');
+        if (selected.length !== 2) { feedback.textContent = 'Sélectionne exactement deux pièces examinées.'; return; }
+        const key = selected.join('|'); const connection = CONNECTIONS[key];
+        if (!connection) { feedback.textContent = 'Aucune relation utile n’apparaît entre ces deux pièces pour le moment.'; return; }
+        if (state.connections.includes(key)) { feedback.textContent = 'Cette concordance figure déjà au registre.'; return; }
+        state.connections.push(key); save(); annotate(connection.annotate[0], connection.annotate[1]);
+        if (connection.award) award(connection.award);
+        addJournal(`connection-${key}`, 'Concordance établie', connection.label);
+        feedback.textContent = 'Concordance consignée. Une annotation a évolué dans les archives.';
+        renderConnections(); renderFieldPrerequisite(); updateDeepFile();
+      });
+
+      function updateDeepFile() {
+        const prerequisites = state.auditSolved && ['anomaly','type','redaction','private'].every(id => state.solved.includes(id)) && REQUIRED_FIELD_CONNECTIONS.every(key => state.connections.includes(key));
+        deepFile.hidden = !prerequisites;
+        if (prerequisites && !state.journal.some(item => item.id === 'deep-available')) addJournal('deep-available', 'Dossier non indexé accessible', 'Le protocole de source, quatre pistes facultatives et trois concordances ouvrent une pièce supplémentaire.');
+        if (state.deepSolved) {
+          deepReward.hidden = false; deepReward.textContent = 'NOTE DE L’AUTEUR · rédigée pour ce dossier, ce n’est pas un message historique : « Il n’y avait pas encore d’adresse à retrouver. Il y avait une place à côté de quelqu’un, et le premier pas de demander à la partager. »';
+          document.querySelectorAll('#deep-form input, #deep-form button').forEach(input => input.disabled = true);
+          document.getElementById('deep-feedback').textContent = 'Dossier résolu et archivé.';
+        }
+      }
+      const DEEP_HINTS = [
+        'Indice 1/2 · Le lieu se déduit au tableau; le dossier fantôme demande ce qui a déclenché le trajet.',
+        'Indice 2/2 · La pièce 001—B nomme une demande faite par l’enquêteur avant de monter dans la voiture.'
+      ];
+      const deepHintButton = document.getElementById('deep-hint');
+      const deepHintCopy = document.getElementById('deep-hint-copy');
+      function restoreDeepHint() {
+        if (!state.deepHintLevel) return;
+        deepHintCopy.hidden = false; deepHintCopy.textContent = DEEP_HINTS[state.deepHintLevel - 1];
+        if (state.deepHintLevel >= DEEP_HINTS.length) deepHintButton.disabled = true;
+      }
+      deepHintButton.addEventListener('click', () => {
+        state.deepHintLevel = Math.min(DEEP_HINTS.length, state.deepHintLevel + 1); save(); restoreDeepHint();
+      });
+      restoreDeepHint();
+      document.getElementById('deep-form').addEventListener('submit', event => {
+        event.preventDefault(); if (state.deepSolved) return;
+        const answer = document.getElementById('deep-answer').value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/\s+/g, ' ');
+        const feedback = document.getElementById('deep-feedback');
+        if (!answer) { feedback.textContent = 'Le dossier attend une conclusion rédigée.'; return; }
+        const accepted = ['covoiturage', 'demande de covoiturage', 'la demande de covoiturage', 'demander un covoiturage', 'demander de me prendre en covoiturage'];
+        if (!accepted.includes(answer)) { feedback.textContent = 'Cette conclusion nomme un lieu ou un souvenir, pas le geste qui a ouvert le trajet.'; return; }
+        state.deepSolved = true; save(); addJournal('deep-solved', 'Dossier fantôme résolu', 'Le premier geste est relié au départ en covoiturage.'); annotate('club', 'Marge du dossier fantôme : un début peut se situer ailleurs que le lieu de la rencontre.'); updateDeepFile();
+      });
+
+      render();
+    })();
   </script>
 </body>
 </html>
