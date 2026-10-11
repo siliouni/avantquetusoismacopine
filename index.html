@@ -1450,7 +1450,7 @@
         const answer = document.getElementById('deep-answer').value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/\s+/g, ' ');
         const feedback = document.getElementById('deep-feedback');
         if (!answer) { feedback.textContent = 'Le dossier attend une conclusion rédigée.'; return; }
-        const namesRideRequest = /\b(covoiturage|covoit|trajet|voiture|conduire|conduit|ramener|emmener|deposer|depose|prendre|demande|demander|proposer|proposition|lift|transport)\b/.test(answer);
+        const namesRideRequest = /\b(covoiturage|covoit|trajet|voiture|conduire|conduit|ramener|emmener|deposer|depose|prendre|place|demande|demander|proposer|proposition|lift|transport|raccompagner|covoiturer)\b/.test(answer);
         const namesOtherPlace = /\b(club|institut|gymnase|ottignies|parking)\b/.test(answer);
         if (namesOtherPlace || !namesRideRequest) { feedback.textContent = 'Plusieurs formulations peuvent convenir si elles décrivent le premier geste : demander une place, proposer un covoiturage ou lui demander de te prendre en voiture.'; return; }
         state.deepSolved = true; save(); addJournal('deep-solved', 'Dossier fantôme résolu', 'Le premier geste est relié au départ en covoiturage.'); annotate('club', 'Marge du dossier fantôme : un début peut se situer ailleurs que le lieu de la rencontre.'); updateDeepFile();
